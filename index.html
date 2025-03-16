@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>TOD</title>
+    <style>
+        :root {
+            --primary-color: #22b14c;
+            --secondary-color: #1a8a3a;
+            --dark-bg: #1a1a1a;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: var(--dark-bg);
+            color: white;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            direction: rtl;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            padding: 1.2rem;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header h1 {
+            font-size: 1.8rem;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .channels-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 1.5rem;
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .channel-card {
+            background: #2a2a2a;
+            border-radius: 16px;
+            padding: 1.2rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .channel-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 24px rgba(34,179,76,0.2);
+            background: #333;
+        }
+
+        .channel-card a {
+            text-decoration: none;
+            color: white;
+            display: block;
+        }
+
+        .channel-logo {
+            width: 100%;
+            height: 100px;
+            object-fit: contain;
+            margin-bottom: 1rem;
+            transition: transform 0.3s;
+        }
+
+        .channel-name {
+            font-size: 0.95rem;
+            line-height: 1.4;
+            text-align: center;
+            color: rgba(255,255,255,0.9);
+        }
+
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--dark-bg);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            transition: opacity 0.3s;
+        }
+
+        .loader {
+            border: 4px solid rgba(255,255,255,0.1);
+            border-top-color: var(--primary-color);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        footer {
+            background: #252525;
+            padding: 1.5rem;
+            margin-top: auto;
+            text-align: center;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        footer a {
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: opacity 0.3s;
+        }
+
+        footer a:hover {
+            opacity: 0.8;
+        }
+
+        @media (max-width: 768px) {
+            .channels-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 1rem;
+                padding: 1rem;
+            }
+
+            .channel-card {
+                padding: 0.8rem;
+            }
+
+            .channel-logo {
+                height: 80px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .channels-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .header h1 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="loading-overlay" id="loader">
+        <div class="loader"></div>
+    </div>
+
+    <header class="header">
+        <h1>BEIN SPORTS AR</h1>
+    </header>
+
+    <main class="channels-grid" id="channelsContainer">
+        <!-- القنوات ستتم إضافتها هنا -->
+    </main>
+
+    <footer>
+        <p>تم التطوير بواسطة FAST TV LIVE | <a href="tg://resolve?domain=FASTTVLIFE1">تابع قناة Telegram</a></p>
+    </footer>
+
+    <script>
+        const channels = [
+            { name: "beIN SPORTS 1", img: "https://alraqi-tv.com/TOD.MENA/assets/beIN_SPORTS1_DIGITAL_Mono.png", link: "https://fgghff.github.io/bein-sport-1/" },
+            { name: "beIN SPORTS 2", img: "https://alraqi-tv.com/TOD.MENA/assets/beIN_SPORTS2_DIGITAL_Mono.png", link: "https://fgghff.github.io/bein-sport-2-/" },
+            { name: "beIN SPORTS 3", img: "https://alraqi-tv.com/TOD.MENA/assets/beIN_SPORTS3_DIGITAL_Mono.png", link: "https://fgghff.github.io/bein-sport-3/" },
+            { name: "beIN SPORTS 4", img: "https://alraqi-tv.com/TOD.MENA/assets/beIN_SPORTS4_DIGITAL_Mono.png", link: "https://fgghff.github.io/bein-sport-4/" },
+            { name: "beIN SPORTS 5", img: "https://alraqi-tv.com/TOD.MENA/assets/beIN_SPORTS5_DIGITAL_Mono.png", link: "https://fgghff.github.io/bein-sport-5-/" },
+            { name: "beIN SPORTS 6", img: "https://alraqi-tv.com/TOD.MENA/assets/beIN_SPORTS6_DIGITAL_Mono-d-1.png", link: "https://fgghff.github.io/bein-sport-6/" },
+            { name: "beIN SPORTS 7", img: "https://alraqi-tv.com/TOD.MENA/assets/beIN_SPORTS7_DIGITAL_Mono.png", link: "https://fdxddzss.github.io/Roor/" },
+            { name: "beIN SPORTS 8", img: "https://alraqi-tv.com/TOD.MENA/assets/logos-_beINSPORTS8.png", link: "https://fgghff.github.io/bein-sport-8/" },
+            { name: "beIN SPORTS 9", img: "https://alraqi-tv.com/TOD.MENA/assets/logos-_beINSPORTS9.png", link: "https://fgghff.github.io/bein-sport-9/" },
+            { name: "beIN SPORT HD", img: "https://alraqi-tv.com/TOD.MENA/assets/bein_SPORTS_FTA_DIGITAL_Mono.png", link: "https://fdxddzss.github.io/FAST-TV-LIFE-11/" },
+            { name: "Premier League", img: "https://alraqi-tv.com/TOD.MENA/assets/premierleague.png", link: "https://fdxddzss.github.io/Gg/" },
+            { name: "beIN SPORTS News", img: "https://alraqi-tv.com/TOD.MENA/assets/NEWS_DIGITAL_Mono.png", link: "https://fgghff.github.io/bein-sport-news-/" },
+            { name: "beIN SPORTS XTRA 1", img: "https://alraqi-tv.com/TOD.MENA/assets/beIN_SPORTS_XTRA1_Digital_Mono.png", link: "https://fdxddzss.github.io/FAST-TV-LIFE-11/" },
+            { name: "beIN SPORTS XTRA 2", img: "https://alraqi-tv.com/TOD.MENA/assets/beIN_SPORTS_XTRA2_Digital_Mono.png", link: "https://fgghff.github.io/bein-sport-Xtra-2/" },
+            { name: "beIN SPORTS XTRA 3", img: "https://alraqi-tv.com/TOD.MENA/assets/logos-_beINSPORTSXTRA3.png", link: "https://fgghff.github.io/bein-sport-Xtra-3-/" },
+            { name: "beIN SPORTS 1 English", img: "https://alraqi-tv.com/TOD.MENA/assets/beIN_SPORTS1_ENGLISH_Digital_Mono.png", link: "https://fgghff.github.io/bein-sport-1-EN/" },
+            { name: "beIN SPORTS 2 English", img: "https://alraqi-tv.com/TOD.MENA/assets/beIN_SPORTS2_ENGLISH_Digital_Mono.png", link: "https://fdxddzss.github.io/FAST-TV-LIFE-11/" },
+            { name: "beIN SPORTS 1 French", img: "https://alraqi-tv.com/TOD.MENA/assets/beIN_SPORTS1_FRENCH_Digital_Mono.png", link: "https://fdxddzss.github.io/FAST-TV-LIFE-11/" },
+            { name: "beIN SPORTS 2 French", img: "https://alraqi-tv.com/TOD.MENA/assets/beIN_SPORTS2_FRENCH_Digital_Mono.png", link: "https://fdxddzss.github.io/FAST-TV-LIFE-11/" },
+            { name: "beIN SPORTS 4K", img: "https://alraqi-tv.com/TOD.MENA/assets/4k_DIGITAL_Mono.png", link: "https://fdxddzss.github.io/FAST-TV-LIFE-11/" },
+            { name: "beIN Movies 1 Premiere", img: "https://alraqi-tv.com/TOD.MENA/assets/MOVIES1_PREMIERE_DIGITAL_Mono.png", link: "https://fgghff.github.io/bein-movies-1/" },
+            { name: "beIN Movies 2 Action", img: "https://alraqi-tv.com/TOD.MENA/assets/MOVIES2_ACTION_DIGITAL_Mono.png", link: "https://fgghff.github.io/bein-movies-2/" },
+            { name: "beIN Movies 3 Drama", img: "https://alraqi-tv.com/TOD.MENA/assets/MOVIES3_DRAMA_DIGITAL_Mono.png", link: "https://fgghff.github.io/bein-movies-3/" },
+            { name: "beIN Movies 4 Family", img: "https://alraqi-tv.com/TOD.MENA/assets/MOVIES4_FAMILY_DIGITAL_Mono.png", link: "https://fgghff.github.io/bein-movies-4/" },
+            { name: "beIN Series 1", img: "https://alraqi-tv.com/TOD.MENA/assets/SERIES1_DIGITAL_Mono.png", link: "https://fgghff.github.io/bein-series-1/" },
+            { name: "beIN Series 2", img: "https://alraqi-tv.com/TOD.MENA/assets/SERIES2_DIGITAL_Mono.png", link: "https://fdxddzss.github.io/Hcf24/" },
+            { name: "bein dream", img: "https://alraqi-tv.com/TOD.MENA/assets/Drama_Stacked_nov_2024_200x200.png", link: "https://fgghff.github.io/bein-dream-/" }
+        ];
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const container = document.getElementById('channelsContainer');
+            const loader = document.getElementById('loader');
+
+            channels.forEach(channel => {
+                const card = document.createElement('div');
+                card.className = 'channel-card';
+                card.innerHTML = `
+                    <a href="${channel.link}" target="_blank" rel="noopener">
+                        <img src="${channel.img}" alt="${channel.name}" class="channel-logo" loading="lazy">
+                        <p class="channel-name">${channel.name}</p>
+                    </a>
+                `;
+                container.appendChild(card);
+            });
+
+            // إخفاء شاشة التحميل
+            loader.style.opacity = '0';
+            setTimeout(() => loader.remove(), 300);
+
+            // تحسين تحميل الصور
+            document.querySelectorAll('img').forEach(img => {
+                img.style.opacity = '0';
+                img.onload = () => {
+                    img.style.transition = 'opacity 0.3s';
+                    img.style.opacity = '1';
+                };
+            });
+        });
+    </script>
+</body>
+</html>
