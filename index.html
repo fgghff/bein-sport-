@@ -3,218 +3,236 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>شغلني</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+<title>منصة شغلني</title>
 
 <style>
 body {
-    font-family: 'Cairo', sans-serif;
     margin:0;
-    background: linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+    font-family:Tahoma;
+    background:#0f172a;
     color:#fff;
 }
-nav {
-    display:flex;
-    justify-content:space-between;
-    padding:15px 30px;
-    background:rgba(255,255,255,0.05);
-}
-button {
-    padding:8px 15px;
-    border:none;
-    border-radius:6px;
-    cursor:pointer;
-    background:#00ffd5;
-}
-.container {padding:20px;}
-.card {
-    background:rgba(255,255,255,0.08);
+
+header {
+    background:#020617;
     padding:15px;
+    text-align:center;
+    font-size:22px;
+    font-weight:bold;
+}
+
+.container {
+    max-width:1000px;
+    margin:auto;
+    padding:20px;
+}
+
+.card {
+    background:#1e293b;
+    padding:20px;
     margin:10px 0;
     border-radius:10px;
 }
-input, select, textarea {
+
+input, textarea {
     width:100%;
     padding:10px;
     margin:5px 0;
-    border-radius:6px;
     border:none;
+    border-radius:5px;
 }
-.hidden {display:none;}
+
+button {
+    background:#3b82f6;
+    color:#fff;
+    border:none;
+    padding:10px;
+    width:100%;
+    border-radius:5px;
+    cursor:pointer;
+}
+
+button:hover {
+    background:#2563eb;
+}
+
+.hidden { display:none; }
+
+.job {
+    background:#334155;
+    padding:10px;
+    margin:10px 0;
+    border-radius:8px;
+}
+
+.rating span {
+    cursor:pointer;
+    font-size:20px;
+}
 </style>
 </head>
 
 <body>
 
-<nav>
-    <h2>🚀 شغلني</h2>
-    <div id="navAuth">
-        <button onclick="showLogin()">دخول</button>
-        <button onclick="showRegister()">تسجيل</button>
-    </div>
-</nav>
+<header>🚀 منصة شغلني</header>
 
 <div class="container">
 
-<div id="register" class="hidden card">
-    <h3>إنشاء حساب</h3>
-    <input id="regUser" placeholder="اسم المستخدم">
-    <input id="regPass" type="password" placeholder="كلمة المرور">
-    <select id="regType">
-        <option value="worker">عامل</option>
-        <option value="employer">صاحب عمل</option>
-    </select>
-    <button onclick="register()">تسجيل</button>
+<!-- تسجيل -->
+<div id="authBox" class="card">
+    <h3>تسجيل / دخول</h3>
+    <input id="username" placeholder="اسم المستخدم">
+    <input id="password" type="password" placeholder="كلمة المرور">
+    <button onclick="register()">تسجيل حساب</button>
+    <button onclick="login()">تسجيل دخول</button>
 </div>
 
-<div id="login" class="hidden card">
-    <h3>تسجيل الدخول</h3>
-    <input id="logUser" placeholder="اسم المستخدم">
-    <input id="logPass" type="password" placeholder="كلمة المرور">
-    <button onclick="login()">دخول</button>
-</div>
+<!-- المنصة -->
+<div id="app" class="hidden">
 
-<div id="dashboard" class="hidden">
-    <h3 id="welcome"></h3>
+    <div class="card">
+        <h3>👋 أهلاً <span id="userDisplay"></span></h3>
+        <button onclick="logout()">تسجيل خروج</button>
+    </div>
 
-    <div id="postJobBox" class="card hidden">
-        <h4>نشر وظيفة</h4>
-        <input id="jobTitle" placeholder="اسم الوظيفة">
-        <textarea id="jobDesc" placeholder="الوصف"></textarea>
+    <div class="card">
+        <h3>📢 نشر وظيفة</h3>
+        <input id="jobTitle" placeholder="عنوان الوظيفة">
+        <textarea id="jobDesc" placeholder="وصف الوظيفة"></textarea>
         <button onclick="addJob()">نشر</button>
     </div>
 
-    <h3>الوظائف</h3>
-    <div id="jobs"></div>
+    <div class="card">
+        <h3>💼 الوظائف</h3>
+        <div id="jobs"></div>
+    </div>
 
-    <button onclick="logout()">تسجيل خروج</button>
 </div>
 
 </div>
 
 <script>
 
-// 🔒 حماية أساسية
+// منع كليك يمين (حماية بسيطة)
 document.addEventListener("contextmenu", e => e.preventDefault());
-document.onkeydown = function(e){
-    if(e.keyCode == 123) return false;
-    if(e.ctrlKey && e.shiftKey && e.keyCode == 73) return false;
-};
 
-// كشف DevTools
-setInterval(()=>{
-    if(window.outerWidth - window.innerWidth > 200){
-        document.body.innerHTML = "🚫 تم حظر الوصول";
-    }
-},1000);
+// بيانات
+let users = JSON.parse(localStorage.getItem("users")) || {};
+let jobs = JSON.parse(localStorage.getItem("jobs")) || [];
+let currentUser = localStorage.getItem("currentUser");
 
-let currentUser = null;
-
-// تحميل الجلسة
+// تحميل الحالة
 window.onload = function(){
-    let saved = sessionStorage.getItem("user");
-    if(saved){
-        currentUser = JSON.parse(saved);
-        startApp();
+    if(currentUser){
+        showApp();
     }
-};
-
-function showLogin(){
-    login.classList.remove("hidden");
-    register.classList.add("hidden");
-}
-function showRegister(){
-    register.classList.remove("hidden");
-    login.classList.add("hidden");
 }
 
 // تسجيل
 function register(){
-    let users = JSON.parse(localStorage.getItem("users")||"[]");
+    let u = username.value.trim();
+    let p = password.value.trim();
 
-    let user = {
-        name: regUser.value,
-        pass: btoa(regPass.value),
-        type: regType.value
-    };
+    if(!u || !p){
+        alert("املأ الحقول");
+        return;
+    }
 
-    users.push(user);
+    if(users[u]){
+        alert("المستخدم موجود");
+        return;
+    }
+
+    users[u] = {password:p, rating:0, votes:0};
     localStorage.setItem("users", JSON.stringify(users));
 
-    alert("تم التسجيل");
+    alert("تم التسجيل بنجاح");
 }
 
-// تسجيل دخول
+// دخول
 function login(){
-    let users = JSON.parse(localStorage.getItem("users")||"[]");
+    let u = username.value.trim();
+    let p = password.value.trim();
 
-    let user = users.find(u => 
-        u.name === logUser.value &&
-        u.pass === btoa(logPass.value)
-    );
+    if(users[u] && users[u].password === p){
+        currentUser = u;
+        localStorage.setItem("currentUser", u);
 
-    if(user){
-        currentUser = user;
-        sessionStorage.setItem("user", JSON.stringify(user));
-        startApp();
-    }else{
-        alert("خطأ في البيانات");
+        showApp(); // ✅ الحل هنا
+    } else {
+        alert("بيانات خاطئة");
     }
 }
 
-// بدء النظام
-function startApp(){
-    document.getElementById("login").classList.add("hidden");
-    document.getElementById("register").classList.add("hidden");
-    document.getElementById("dashboard").classList.remove("hidden");
-
-    document.getElementById("welcome").innerText = "اهلاً " + currentUser.name;
-
-    navAuth.innerHTML = "👤 " + currentUser.name;
-
-    if(currentUser.type === "employer"){
-        postJobBox.classList.remove("hidden");
-    }
-
-    loadJobs();
-}
-
-// نشر وظيفة
-function addJob(){
-    let jobs = JSON.parse(localStorage.getItem("jobs")||"[]");
-
-    jobs.push({
-        title: jobTitle.value,
-        desc: jobDesc.value,
-        owner: currentUser.name
-    });
-
-    localStorage.setItem("jobs", JSON.stringify(jobs));
-    loadJobs();
-}
-
-// عرض الوظائف
-function loadJobs(){
-    let jobs = JSON.parse(localStorage.getItem("jobs")||"[]");
-
-    jobsDiv.innerHTML = "";
-
-    jobs.forEach(job=>{
-        jobsDiv.innerHTML += `
-        <div class="card">
-            <h4>${job.title}</h4>
-            <p>${job.desc}</p>
-            <small>بواسطة: ${job.owner}</small>
-        </div>
-        `;
-    });
+// عرض المنصة
+function showApp(){
+    authBox.classList.add("hidden");
+    app.classList.remove("hidden");
+    userDisplay.innerText = currentUser;
+    renderJobs();
 }
 
 // خروج
 function logout(){
-    sessionStorage.removeItem("user");
+    localStorage.removeItem("currentUser");
     location.reload();
+}
+
+// نشر وظيفة
+function addJob(){
+    let title = jobTitle.value.trim();
+    let desc = jobDesc.value.trim();
+
+    if(!title || !desc){
+        alert("املأ البيانات");
+        return;
+    }
+
+    jobs.push({
+        title,
+        desc,
+        user: currentUser,
+        ratings: []
+    });
+
+    localStorage.setItem("jobs", JSON.stringify(jobs));
+
+    jobTitle.value = "";
+    jobDesc.value = "";
+
+    renderJobs();
+}
+
+// عرض الوظائف
+function renderJobs(){
+    jobsDiv = document.getElementById("jobs");
+    jobsDiv.innerHTML = "";
+
+    jobs.forEach((job, index) => {
+
+        let avg = job.ratings.length
+            ? (job.ratings.reduce((a,b)=>a+b)/job.ratings.length).toFixed(1)
+            : "لا يوجد";
+
+        jobsDiv.innerHTML += `
+        <div class="job">
+            <h4>${job.title}</h4>
+            <p>${job.desc}</p>
+            <small>👤 ${job.user}</small>
+            <p>⭐ التقييم: ${avg}</p>
+
+            <div class="rating">
+                ${[1,2,3,4,5].map(star=>`<span onclick="rate(${index},${star})">⭐</span>`).join("")}
+            </div>
+        </div>`;
+    });
+}
+
+// تقييم
+function rate(index, value){
+    jobs[index].ratings.push(value);
+    localStorage.setItem("jobs", JSON.stringify(jobs));
+    renderJobs();
 }
 
 </script>
