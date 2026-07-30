@@ -1,13 +1,8 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<!DOCTYPE html><html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>شغلني</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
-
-<style>
+<title>شغلني</title><link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet"><style>
 body {
     font-family: 'Cairo', sans-serif;
     margin:0;
@@ -50,23 +45,13 @@ input, select, textarea {
 .hidden {display:none;}
 
 .star {cursor:pointer; font-size:20px;}
-</style>
-</head>
-
-<body>
-
-<nav>
+</style></head><body><nav>
     <h2>🚀 شغلني</h2>
     <div id="navAuth">
         <button onclick="showLogin()">دخول</button>
         <button onclick="showRegister()">تسجيل</button>
     </div>
-</nav>
-
-<div class="container">
-
-<!-- تسجيل -->
-<div id="register" class="hidden card">
+</nav><div class="container"><!-- تسجيل --><div id="register" class="hidden card">
     <h3>إنشاء حساب</h3>
     <input id="regUser" placeholder="اسم المستخدم">
     <input id="regPass" type="password" placeholder="كلمة المرور">
@@ -75,169 +60,165 @@ input, select, textarea {
         <option value="employer">صاحب عمل</option>
     </select>
     <button onclick="register()">تسجيل</button>
-</div>
-
-<!-- تسجيل دخول -->
-<div id="login" class="hidden card">
+</div><!-- تسجيل دخول --><div id="login" class="hidden card">
     <h3>تسجيل الدخول</h3>
     <input id="logUser" placeholder="اسم المستخدم">
     <input id="logPass" type="password" placeholder="كلمة المرور">
     <button onclick="login()">دخول</button>
-</div>
-
-<!-- لوحة التحكم -->
-<div id="dashboard" class="hidden">
-    <h3 id="welcome"></h3>
-
-    <!-- نشر وظيفة -->
-    <div id="postJobBox" class="card hidden">
-        <h4>نشر وظيفة</h4>
-        <input id="jobTitle" placeholder="اسم الوظيفة">
-        <input id="jobLocation" placeholder="الموقع (مثال: بغداد)">
-        <select id="jobType">
-            <option>دوام كامل</option>
-            <option>دوام جزئي</option>
-            <option>عن بعد</option>
-        </select>
-        <textarea id="jobDesc" placeholder="تفاصيل العمل"></textarea>
-        <button onclick="addJob()">نشر</button>
-    </div>
-
-    <button onclick="logout()">تسجيل خروج</button>
+</div><!-- لوحة التحكم --><div id="dashboard" class="hidden">
+    <h3 id="welcome"></h3><div id="postJobBox" class="card hidden">
+    <h4>نشر وظيفة</h4>
+    <input id="jobTitle" placeholder="اسم الوظيفة">
+    <input id="jobLocation" placeholder="الموقع">
+    <select id="jobType">
+        <option>دوام كامل</option>
+        <option>دوام جزئي</option>
+        <option>عن بعد</option>
+    </select>
+    <textarea id="jobDesc" placeholder="تفاصيل العمل"></textarea>
+    <button onclick="addJob()">نشر</button>
 </div>
 
 <h3>الوظائف</h3>
 <div id="jobs"></div>
 
-</div>
+<button onclick="logout()">تسجيل خروج</button>
 
-<script>
+</div></div><script>
 
 let currentUser = null;
 
-// عرض
+/* عرض النماذج */
 function showLogin(){
-    login.classList.remove("hidden");
-    register.classList.add("hidden");
+    document.getElementById("login").classList.remove("hidden");
+    document.getElementById("register").classList.add("hidden");
 }
+
 function showRegister(){
-    register.classList.remove("hidden");
-    login.classList.add("hidden");
+    document.getElementById("register").classList.remove("hidden");
+    document.getElementById("login").classList.add("hidden");
 }
 
-// تسجيل
+/* تسجيل */
 function register(){
-    let users = JSON.parse(localStorage.getItem("users")||"[]");
+    let user = document.getElementById("regUser").value;
+    let pass = document.getElementById("regPass").value;
+    let type = document.getElementById("regType").value;
 
-    let user = {
-        name: regUser.value,
-        pass: regPass.value,
-        type: regType.value,
-        rating: 0,
-        votes: 0
-    };
+    if(!user || !pass){
+        alert("املأ جميع الحقول");
+        return;
+    }
 
-    users.push(user);
+    let users = JSON.parse(localStorage.getItem("users") || "[]");
+
+    users.push({user, pass, type, rating:0});
     localStorage.setItem("users", JSON.stringify(users));
-    alert("تم إنشاء الحساب");
+
+    alert("تم التسجيل!");
 }
 
-// تسجيل دخول
+/* تسجيل دخول */
 function login(){
-    let users = JSON.parse(localStorage.getItem("users")||"[]");
+    let user = document.getElementById("logUser").value;
+    let pass = document.getElementById("logPass").value;
 
-    let user = users.find(u=>u.name==logUser.value && u.pass==logPass.value);
+    let users = JSON.parse(localStorage.getItem("users") || "[]");
 
-    if(user){
-        currentUser = user;
-        dashboard.classList.remove("hidden");
-        welcome.innerText = "اهلاً " + user.name;
+    let found = users.find(u => u.user === user && u.pass === pass);
 
-        navAuth.innerHTML = "👤 " + user.name;
-
-        if(user.type === "employer"){
-            postJobBox.classList.remove("hidden");
-        }
-
-        loadJobs();
+    if(found){
+        currentUser = found;
+        startApp();
     } else {
         alert("بيانات خاطئة");
     }
 }
 
-// تسجيل خروج
-function logout(){
-    location.reload();
+/* بدء التطبيق */
+function startApp(){
+    document.getElementById("login").classList.add("hidden");
+    document.getElementById("register").classList.add("hidden");
+    document.getElementById("dashboard").classList.remove("hidden");
+
+    document.getElementById("welcome").innerText = "مرحبا " + currentUser.user;
+
+    if(currentUser.type === "employer"){
+        document.getElementById("postJobBox").classList.remove("hidden");
+    }
+
+    loadJobs();
 }
 
-// نشر وظيفة
+/* نشر وظيفة */
 function addJob(){
-    let jobs = JSON.parse(localStorage.getItem("jobs")||"[]");
+    let title = document.getElementById("jobTitle").value;
+    let location = document.getElementById("jobLocation").value;
+    let type = document.getElementById("jobType").value;
+    let desc = document.getElementById("jobDesc").value;
+
+    if(!title || !location || !desc){
+        alert("اكمل البيانات");
+        return;
+    }
+
+    let jobs = JSON.parse(localStorage.getItem("jobs") || "[]");
 
     jobs.push({
-        title: jobTitle.value,
-        location: jobLocation.value,
-        type: jobType.value,
-        desc: jobDesc.value,
-        owner: currentUser.name
+        title,
+        location,
+        type,
+        desc,
+        owner: currentUser.user,
+        rating: 0
     });
 
     localStorage.setItem("jobs", JSON.stringify(jobs));
+
     loadJobs();
 }
 
-// عرض الوظائف
+/* عرض الوظائف */
 function loadJobs(){
-    let jobs = JSON.parse(localStorage.getItem("jobs")||"[]");
-    let users = JSON.parse(localStorage.getItem("users")||"[]");
+    let jobs = JSON.parse(localStorage.getItem("jobs") || "[]");
+    let container = document.getElementById("jobs");
+    container.innerHTML = "";
 
-    jobsDiv.innerHTML = "";
+    jobs.forEach((job, index) => {
+        let div = document.createElement("div");
+        div.className = "card";
 
-    jobs.forEach((job,i)=>{
-        let owner = users.find(u=>u.name==job.owner);
+        div.innerHTML = `
+        <h4>${job.title}</h4>
+        <p>📍 ${job.location}</p>
+        <p>💼 ${job.type}</p>
+        <p>${job.desc}</p>
+        <p>⭐ تقييم: ${job.rating}</p>
+        <button onclick="rateJob(${index})">تقييم</button>
+        `;
 
-        let rating = owner.votes ? (owner.rating / owner.votes).toFixed(1) : "0";
-
-        jobsDiv.innerHTML += `
-        <div class="card">
-            <h4>${job.title}</h4>
-            <p>📍 ${job.location}</p>
-            <p>💼 ${job.type}</p>
-            <p>${job.desc}</p>
-            <p>👤 ${job.owner} ⭐ ${rating}</p>
-
-            ${currentUser ? `
-            <div>
-                تقييم:
-                <span class="star" onclick="rate('${job.owner}',1)">⭐</span>
-                <span class="star" onclick="rate('${job.owner}',2)">⭐</span>
-                <span class="star" onclick="rate('${job.owner}',3)">⭐</span>
-                <span class="star" onclick="rate('${job.owner}',4)">⭐</span>
-                <span class="star" onclick="rate('${job.owner}',5)">⭐</span>
-            </div>` : ""}
-        </div>`;
+        container.appendChild(div);
     });
 }
 
-// تقييم
-function rate(username,value){
-    let users = JSON.parse(localStorage.getItem("users"));
+/* تقييم */
+function rateJob(index){
+    let rating = prompt("ادخل تقييم من 1 الى 5");
 
-    let user = users.find(u=>u.name==username);
+    let jobs = JSON.parse(localStorage.getItem("jobs") || "[]");
 
-    user.rating += value;
-    user.votes += 1;
+    jobs[index].rating = rating;
 
-    localStorage.setItem("users", JSON.stringify(users));
+    localStorage.setItem("jobs", JSON.stringify(jobs));
 
     loadJobs();
 }
 
-let jobsDiv = document.getElementById("jobs");
+/* تسجيل خروج */
+function logout(){
+    currentUser = null;
+    location.reload();
+}
 
-loadJobs();
-
-</script>
-
-</body>
-    </html>
+</script></body>
+</html>
