@@ -3,185 +3,202 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>شغلني</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+<title>شغلني | منصة التوظيف</title>
 
 <style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Cairo", sans-serif;
+}
+
 body {
-    font-family: 'Cairo', sans-serif;
-    background: linear-gradient(135deg,#1f4037,#99f2c8);
-    margin:0;
-    color:#fff;
+    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+    color: white;
 }
 
+/* Navbar */
 nav {
-    display:flex;
-    justify-content:space-between;
-    padding:20px;
-    background:rgba(0,0,0,0.3);
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 50px;
+    background: rgba(255,255,255,0.05);
+    backdrop-filter: blur(10px);
 }
 
-button {
-    padding:8px 15px;
-    border:none;
-    cursor:pointer;
-    border-radius:6px;
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: #00ffd5;
 }
 
-.container {
-    padding:20px;
+nav a {
+    color: white;
+    margin-left: 20px;
+    text-decoration: none;
 }
 
-.card {
-    background:rgba(255,255,255,0.1);
-    padding:15px;
-    margin:10px 0;
-    border-radius:10px;
+/* Hero */
+.hero {
+    text-align: center;
+    padding: 100px 20px;
+}
+
+.hero h1 {
+    font-size: 48px;
+}
+
+.hero p {
+    margin: 20px 0;
+    color: #ccc;
+}
+
+.btn {
+    padding: 12px 25px;
+    border-radius: 25px;
+    border: none;
+    cursor: pointer;
+    margin: 10px;
+}
+
+.btn-primary {
+    background: #00ffd5;
+    color: black;
+}
+
+.btn-secondary {
+    background: transparent;
+    border: 1px solid #00ffd5;
+    color: white;
+}
+
+/* Jobs Section */
+.jobs {
+    padding: 50px;
+}
+
+.jobs h2 {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.job-card {
+    background: rgba(255,255,255,0.05);
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 15px;
+    transition: 0.3s;
+}
+
+.job-card:hover {
+    transform: scale(1.03);
+    background: rgba(0,255,213,0.1);
+}
+
+.job-title {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.job-company {
+    color: #aaa;
+    margin: 5px 0;
+}
+
+.job-btn {
+    margin-top: 10px;
+    display: inline-block;
+    padding: 8px 15px;
+    background: #00ffd5;
+    color: black;
+    border-radius: 20px;
+    text-decoration: none;
+}
+
+/* Form Section */
+.form-section {
+    padding: 50px;
+    background: rgba(255,255,255,0.05);
+}
+
+.form-section h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+form {
+    max-width: 500px;
+    margin: auto;
 }
 
 input, textarea {
-    width:100%;
-    padding:10px;
-    margin:5px 0;
-    border:none;
-    border-radius:6px;
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 10px;
+    border: none;
 }
 
-.hidden {display:none;}
+footer {
+    text-align: center;
+    padding: 20px;
+    background: rgba(0,0,0,0.3);
+}
 </style>
 </head>
 
 <body>
 
 <nav>
-    <h2>🚀 شغلني</h2>
-    <div id="authArea">
-        <button onclick="showLogin()">دخول</button>
-        <button onclick="showRegister()">تسجيل</button>
+    <div class="logo">شغلني</div>
+    <div>
+        <a href="#">الرئيسية</a>
+        <a href="#">الوظائف</a>
+        <a href="#">انشر وظيفة</a>
     </div>
 </nav>
 
-<div class="container">
+<section class="hero">
+    <h1>ابدأ رحلتك المهنية الآن</h1>
+    <p>منصة شغلني تربط بين أصحاب العمل والباحثين عن الوظائف بسهولة</p>
+    <button class="btn btn-primary">تصفح الوظائف</button>
+    <button class="btn btn-secondary">انشر وظيفة</button>
+</section>
 
-<!-- تسجيل -->
-<div id="register" class="hidden">
-    <h3>إنشاء حساب</h3>
-    <input id="regUser" placeholder="اسم المستخدم">
-    <input id="regPass" type="password" placeholder="كلمة المرور">
-    <button onclick="register()">تسجيل</button>
-</div>
+<section class="jobs">
+    <h2>أحدث الوظائف</h2>
 
-<!-- تسجيل دخول -->
-<div id="login" class="hidden">
-    <h3>تسجيل الدخول</h3>
-    <input id="logUser" placeholder="اسم المستخدم">
-    <input id="logPass" type="password" placeholder="كلمة المرور">
-    <button onclick="login()">دخول</button>
-</div>
+    <div class="job-card">
+        <div class="job-title">مصمم مواقع</div>
+        <div class="job-company">شركة تقنية</div>
+        <p>نبحث عن مصمم UI/UX بخبرة جيدة</p>
+        <a href="#" class="job-btn">تقديم</a>
+    </div>
 
-<!-- نشر وظيفة -->
-<div id="postJob" class="hidden">
-    <h3>نشر وظيفة</h3>
-    <input id="jobTitle" placeholder="اسم الوظيفة">
-    <textarea id="jobDesc" placeholder="وصف الوظيفة"></textarea>
-    <button onclick="addJob()">نشر</button>
-</div>
+    <div class="job-card">
+        <div class="job-title">مطور ويب</div>
+        <div class="job-company">شركة برمجيات</div>
+        <p>خبرة في HTML, CSS, JavaScript</p>
+        <a href="#" class="job-btn">تقديم</a>
+    </div>
 
-<!-- عرض وظائف -->
-<h3>الوظائف</h3>
-<div id="jobs"></div>
+</section>
 
-</div>
+<section class="form-section">
+    <h2>انشر وظيفة</h2>
 
-<script>
+    <form>
+        <input type="text" placeholder="اسم الوظيفة" required>
+        <input type="text" placeholder="اسم الشركة" required>
+        <textarea placeholder="وصف الوظيفة"></textarea>
+        <button class="btn btn-primary">نشر</button>
+    </form>
+</section>
 
-let currentUser = null;
-
-function showLogin(){
-    document.getElementById("login").classList.remove("hidden");
-    document.getElementById("register").classList.add("hidden");
-}
-
-function showRegister(){
-    document.getElementById("register").classList.remove("hidden");
-    document.getElementById("login").classList.add("hidden");
-}
-
-function register(){
-    let user = regUser.value;
-    let pass = regPass.value;
-
-    let users = JSON.parse(localStorage.getItem("users")||"[]");
-
-    users.push({user,pass,rating:0});
-    localStorage.setItem("users",JSON.stringify(users));
-
-    alert("تم التسجيل!");
-}
-
-function login(){
-    let user = logUser.value;
-    let pass = logPass.value;
-
-    let users = JSON.parse(localStorage.getItem("users")||"[]");
-
-    let found = users.find(u=>u.user===user && u.pass===pass);
-
-    if(found){
-        currentUser = user;
-        document.getElementById("postJob").classList.remove("hidden");
-        document.getElementById("authArea").innerHTML = "مرحباً "+user;
-    } else {
-        alert("خطأ!");
-    }
-}
-
-function addJob(){
-    let title = jobTitle.value;
-    let desc = jobDesc.value;
-
-    let jobs = JSON.parse(localStorage.getItem("jobs")||"[]");
-
-    jobs.push({title,desc,user:currentUser,ratings:[]});
-    localStorage.setItem("jobs",JSON.stringify(jobs));
-
-    loadJobs();
-}
-
-function rate(index,value){
-    let jobs = JSON.parse(localStorage.getItem("jobs"));
-    jobs[index].ratings.push(value);
-    localStorage.setItem("jobs",JSON.stringify(jobs));
-    loadJobs();
-}
-
-function loadJobs(){
-    let jobs = JSON.parse(localStorage.getItem("jobs")||"[]");
-
-    let html="";
-
-    jobs.forEach((job,i)=>{
-        let avg = job.ratings.length ? 
-            (job.ratings.reduce((a,b)=>a+b)/job.ratings.length).toFixed(1) : "0";
-
-        html+=`
-        <div class="card">
-            <h4>${job.title}</h4>
-            <p>${job.desc}</p>
-            <small>بواسطة: ${job.user}</small><br>
-            ⭐ ${avg}
-            <br>
-            <button onclick="rate(${i},5)">👍 تقييم</button>
-        </div>`;
-    });
-
-    document.getElementById("jobs").innerHTML = html;
-}
-
-loadJobs();
-
-</script>
+<footer>
+    <p>© 2026 منصة شغلني - جميع الحقوق محفوظة</p>
+</footer>
 
 </body>
 </html>
