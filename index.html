@@ -1,243 +1,187 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>TOD</title>
-    <style>
-        :root {
-            --primary-color: #22b14c;
-            --secondary-color: #1a8a3a;
-            --dark-bg: #1a1a1a;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>شغلني</title>
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
 
-        body {
-            background: var(--dark-bg);
-            color: white;
-            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-            direction: rtl;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
+<style>
+body {
+    font-family: 'Cairo', sans-serif;
+    background: linear-gradient(135deg,#1f4037,#99f2c8);
+    margin:0;
+    color:#fff;
+}
 
-        .header {
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            padding: 1.2rem;
-            text-align: center;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
+nav {
+    display:flex;
+    justify-content:space-between;
+    padding:20px;
+    background:rgba(0,0,0,0.3);
+}
 
-        .header h1 {
-            font-size: 1.8rem;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
-        }
+button {
+    padding:8px 15px;
+    border:none;
+    cursor:pointer;
+    border-radius:6px;
+}
 
-        .channels-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-            gap: 1.5rem;
-            padding: 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-            width: 100%;
-        }
+.container {
+    padding:20px;
+}
 
-        .channel-card {
-            background: #2a2a2a;
-            border-radius: 16px;
-            padding: 1.2rem;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-            overflow: hidden;
-            border: 1px solid rgba(255,255,255,0.1);
-        }
+.card {
+    background:rgba(255,255,255,0.1);
+    padding:15px;
+    margin:10px 0;
+    border-radius:10px;
+}
 
-        .channel-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 24px rgba(34,179,76,0.2);
-            background: #333;
-        }
+input, textarea {
+    width:100%;
+    padding:10px;
+    margin:5px 0;
+    border:none;
+    border-radius:6px;
+}
 
-        .channel-card a {
-            text-decoration: none;
-            color: white;
-            display: block;
-        }
-
-        .channel-logo {
-            width: 100%;
-            height: 100px;
-            object-fit: contain;
-            margin-bottom: 1rem;
-            transition: transform 0.3s;
-        }
-
-        .channel-name {
-            font-size: 0.95rem;
-            line-height: 1.4;
-            text-align: center;
-            color: rgba(255,255,255,0.9);
-        }
-
-        .loading-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: var(--dark-bg);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-            transition: opacity 0.3s;
-        }
-
-        .loader {
-            border: 4px solid rgba(255,255,255,0.1);
-            border-top-color: var(--primary-color);
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        footer {
-            background: #252525;
-            padding: 1.5rem;
-            margin-top: auto;
-            text-align: center;
-            border-top: 1px solid rgba(255,255,255,0.1);
-        }
-
-        footer a {
-            color: var(--primary-color);
-            text-decoration: none;
-            transition: opacity 0.3s;
-        }
-
-        footer a:hover {
-            opacity: 0.8;
-        }
-
-        @media (max-width: 768px) {
-            .channels-grid {
-                grid-template-columns: repeat(3, 1fr);
-                gap: 1rem;
-                padding: 1rem;
-            }
-
-            .channel-card {
-                padding: 0.8rem;
-            }
-
-            .channel-logo {
-                height: 80px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .channels-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .header h1 {
-                font-size: 1.5rem;
-            }
-        }
-    </style>
+.hidden {display:none;}
+</style>
 </head>
+
 <body>
-    <div class="loading-overlay" id="loader">
-        <div class="loader"></div>
+
+<nav>
+    <h2>🚀 شغلني</h2>
+    <div id="authArea">
+        <button onclick="showLogin()">دخول</button>
+        <button onclick="showRegister()">تسجيل</button>
     </div>
+</nav>
 
-    <header class="header">
-        <h1>BEIN SPORTS AR</h1>
-    </header>
+<div class="container">
 
-    <main class="channels-grid" id="channelsContainer">
-        <!-- القنوات ستتم إضافتها هنا -->
-    </main>
+<!-- تسجيل -->
+<div id="register" class="hidden">
+    <h3>إنشاء حساب</h3>
+    <input id="regUser" placeholder="اسم المستخدم">
+    <input id="regPass" type="password" placeholder="كلمة المرور">
+    <button onclick="register()">تسجيل</button>
+</div>
 
-    <footer>
-        <p>تم التطوير بواسطة FAST TV LIVE | <a href="tg://resolve?domain=FASTTVLIFE1">تابع قناة Telegram</a></p>
-    </footer>
+<!-- تسجيل دخول -->
+<div id="login" class="hidden">
+    <h3>تسجيل الدخول</h3>
+    <input id="logUser" placeholder="اسم المستخدم">
+    <input id="logPass" type="password" placeholder="كلمة المرور">
+    <button onclick="login()">دخول</button>
+</div>
 
-    <script>
-        const channels = [
-            { name: "beIN SPORTS 1", img: "https://alraqi-tv.com/TOD.MENA/assets/beIN_SPORTS1_DIGITAL_Mono.png", link: "https://fgghff.github.io/bein-sport-1/" },
-            { name: "beIN SPORTS 2", img: "https://alraqi-tv.com/TOD.MENA/assets/beIN_SPORTS2_DIGITAL_Mono.png", link: "https://fgghff.github.io/bein-sport-2-/" },
-            { name: "beIN SPORTS 3", img: "https://alraqi-tv.com/TOD.MENA/assets/beIN_SPORTS3_DIGITAL_Mono.png", link: "https://fgghff.github.io/bein-sport-3/" },
-            { name: "beIN SPORTS 4", img: "https://alraqi-tv.com/TOD.MENA/assets/beIN_SPORTS4_DIGITAL_Mono.png", link: "https://fgghff.github.io/bein-sport-4/" },
-            { name: "beIN SPORTS 5", img: "https://alraqi-tv.com/TOD.MENA/assets/beIN_SPORTS5_DIGITAL_Mono.png", link: "https://fgghff.github.io/bein-sport-5-/" },
-            { name: "beIN SPORTS 6", img: "https://alraqi-tv.com/TOD.MENA/assets/beIN_SPORTS6_DIGITAL_Mono-d-1.png", link: "https://fgghff.github.io/bein-sport-6/" },
-            { name: "beIN SPORTS 7", img: "https://alraqi-tv.com/TOD.MENA/assets/beIN_SPORTS7_DIGITAL_Mono.png", link: "https://fdxddzss.github.io/Roor/" },
-            { name: "beIN SPORTS 8", img: "https://alraqi-tv.com/TOD.MENA/assets/logos-_beINSPORTS8.png", link: "https://fgghff.github.io/bein-sport-8/" },
-            { name: "beIN SPORTS 9", img: "https://alraqi-tv.com/TOD.MENA/assets/logos-_beINSPORTS9.png", link: "https://fgghff.github.io/bein-sport-9/" },
-            { name: "beIN SPORT HD", img: "https://alraqi-tv.com/TOD.MENA/assets/bein_SPORTS_FTA_DIGITAL_Mono.png", link: "https://fdxddzss.github.io/FAST-TV-LIFE-11/" },
-            { name: "Premier League", img: "https://alraqi-tv.com/TOD.MENA/assets/premierleague.png", link: "https://fdxddzss.github.io/Gg/" },
-            { name: "beIN SPORTS News", img: "https://alraqi-tv.com/TOD.MENA/assets/NEWS_DIGITAL_Mono.png", link: "https://fgghff.github.io/bein-sport-news-/" },
-            { name: "beIN SPORTS XTRA 1", img: "https://alraqi-tv.com/TOD.MENA/assets/beIN_SPORTS_XTRA1_Digital_Mono.png", link: "https://fdxddzss.github.io/FAST-TV-LIFE-11/" },
-            { name: "beIN SPORTS XTRA 2", img: "https://alraqi-tv.com/TOD.MENA/assets/beIN_SPORTS_XTRA2_Digital_Mono.png", link: "https://fgghff.github.io/bein-sport-Xtra-2/" },
-            { name: "beIN SPORTS XTRA 3", img: "https://alraqi-tv.com/TOD.MENA/assets/logos-_beINSPORTSXTRA3.png", link: "https://fgghff.github.io/bein-sport-Xtra-3-/" },
-            { name: "beIN SPORTS 1 English", img: "https://alraqi-tv.com/TOD.MENA/assets/beIN_SPORTS1_ENGLISH_Digital_Mono.png", link: "https://fgghff.github.io/bein-sport-1-EN/" },
-            { name: "beIN SPORTS 2 English", img: "https://alraqi-tv.com/TOD.MENA/assets/beIN_SPORTS2_ENGLISH_Digital_Mono.png", link: "https://fdxddzss.github.io/FAST-TV-LIFE-11/" },
-            { name: "beIN SPORTS 1 French", img: "https://alraqi-tv.com/TOD.MENA/assets/beIN_SPORTS1_FRENCH_Digital_Mono.png", link: "https://fdxddzss.github.io/FAST-TV-LIFE-11/" },
-            { name: "beIN SPORTS 2 French", img: "https://alraqi-tv.com/TOD.MENA/assets/beIN_SPORTS2_FRENCH_Digital_Mono.png", link: "https://fdxddzss.github.io/FAST-TV-LIFE-11/" },
-            { name: "beIN SPORTS 4K", img: "https://alraqi-tv.com/TOD.MENA/assets/4k_DIGITAL_Mono.png", link: "https://fdxddzss.github.io/FAST-TV-LIFE-11/" },
-            { name: "beIN Movies 1 Premiere", img: "https://alraqi-tv.com/TOD.MENA/assets/MOVIES1_PREMIERE_DIGITAL_Mono.png", link: "https://fgghff.github.io/bein-movies-1/" },
-            { name: "beIN Movies 2 Action", img: "https://alraqi-tv.com/TOD.MENA/assets/MOVIES2_ACTION_DIGITAL_Mono.png", link: "https://fgghff.github.io/bein-movies-2/" },
-            { name: "beIN Movies 3 Drama", img: "https://alraqi-tv.com/TOD.MENA/assets/MOVIES3_DRAMA_DIGITAL_Mono.png", link: "https://fgghff.github.io/bein-movies-3/" },
-            { name: "beIN Movies 4 Family", img: "https://alraqi-tv.com/TOD.MENA/assets/MOVIES4_FAMILY_DIGITAL_Mono.png", link: "https://fgghff.github.io/bein-movies-4/" },
-            { name: "beIN Series 1", img: "https://alraqi-tv.com/TOD.MENA/assets/SERIES1_DIGITAL_Mono.png", link: "https://fgghff.github.io/bein-series-1/" },
-            { name: "beIN Series 2", img: "https://alraqi-tv.com/TOD.MENA/assets/SERIES2_DIGITAL_Mono.png", link: "https://fdxddzss.github.io/Hcf24/" },
-            { name: "bein dream", img: "https://alraqi-tv.com/TOD.MENA/assets/Drama_Stacked_nov_2024_200x200.png", link: "https://fgghff.github.io/bein-dream-/" }
-        ];
+<!-- نشر وظيفة -->
+<div id="postJob" class="hidden">
+    <h3>نشر وظيفة</h3>
+    <input id="jobTitle" placeholder="اسم الوظيفة">
+    <textarea id="jobDesc" placeholder="وصف الوظيفة"></textarea>
+    <button onclick="addJob()">نشر</button>
+</div>
 
-        window.addEventListener('DOMContentLoaded', () => {
-            const container = document.getElementById('channelsContainer');
-            const loader = document.getElementById('loader');
+<!-- عرض وظائف -->
+<h3>الوظائف</h3>
+<div id="jobs"></div>
 
-            channels.forEach(channel => {
-                const card = document.createElement('div');
-                card.className = 'channel-card';
-                card.innerHTML = `
-                    <a href="${channel.link}" target="_blank" rel="noopener">
-                        <img src="${channel.img}" alt="${channel.name}" class="channel-logo" loading="lazy">
-                        <p class="channel-name">${channel.name}</p>
-                    </a>
-                `;
-                container.appendChild(card);
-            });
+</div>
 
-            // إخفاء شاشة التحميل
-            loader.style.opacity = '0';
-            setTimeout(() => loader.remove(), 300);
+<script>
 
-            // تحسين تحميل الصور
-            document.querySelectorAll('img').forEach(img => {
-                img.style.opacity = '0';
-                img.onload = () => {
-                    img.style.transition = 'opacity 0.3s';
-                    img.style.opacity = '1';
-                };
-            });
-        });
-    </script>
+let currentUser = null;
+
+function showLogin(){
+    document.getElementById("login").classList.remove("hidden");
+    document.getElementById("register").classList.add("hidden");
+}
+
+function showRegister(){
+    document.getElementById("register").classList.remove("hidden");
+    document.getElementById("login").classList.add("hidden");
+}
+
+function register(){
+    let user = regUser.value;
+    let pass = regPass.value;
+
+    let users = JSON.parse(localStorage.getItem("users")||"[]");
+
+    users.push({user,pass,rating:0});
+    localStorage.setItem("users",JSON.stringify(users));
+
+    alert("تم التسجيل!");
+}
+
+function login(){
+    let user = logUser.value;
+    let pass = logPass.value;
+
+    let users = JSON.parse(localStorage.getItem("users")||"[]");
+
+    let found = users.find(u=>u.user===user && u.pass===pass);
+
+    if(found){
+        currentUser = user;
+        document.getElementById("postJob").classList.remove("hidden");
+        document.getElementById("authArea").innerHTML = "مرحباً "+user;
+    } else {
+        alert("خطأ!");
+    }
+}
+
+function addJob(){
+    let title = jobTitle.value;
+    let desc = jobDesc.value;
+
+    let jobs = JSON.parse(localStorage.getItem("jobs")||"[]");
+
+    jobs.push({title,desc,user:currentUser,ratings:[]});
+    localStorage.setItem("jobs",JSON.stringify(jobs));
+
+    loadJobs();
+}
+
+function rate(index,value){
+    let jobs = JSON.parse(localStorage.getItem("jobs"));
+    jobs[index].ratings.push(value);
+    localStorage.setItem("jobs",JSON.stringify(jobs));
+    loadJobs();
+}
+
+function loadJobs(){
+    let jobs = JSON.parse(localStorage.getItem("jobs")||"[]");
+
+    let html="";
+
+    jobs.forEach((job,i)=>{
+        let avg = job.ratings.length ? 
+            (job.ratings.reduce((a,b)=>a+b)/job.ratings.length).toFixed(1) : "0";
+
+        html+=`
+        <div class="card">
+            <h4>${job.title}</h4>
+            <p>${job.desc}</p>
+            <small>بواسطة: ${job.user}</small><br>
+            ⭐ ${avg}
+            <br>
+            <button onclick="rate(${i},5)">👍 تقييم</button>
+        </div>`;
+    });
+
+    document.getElementById("jobs").innerHTML = html;
+}
+
+loadJobs();
+
+</script>
+
 </body>
 </html>
