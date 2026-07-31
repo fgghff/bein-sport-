@@ -1,593 +1,180 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<!DOCTYPE html><html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>شغلني | منصة التوظيف المتكاملة</title>
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+<title>شغلني | منصة التوظيف</title><link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet"><style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:"Cairo",sans-serif}
+body{background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);color:#fff}
+.container{width:90%;margin:auto;padding:20px}
+nav{display:flex;justify-content:space-between;align-items:center;padding:15px 0}
+nav h1{color:#00eaff}
+nav button{padding:8px 15px;border:none;border-radius:8px;cursor:pointer;background:#00eaff;color:#000}
 
-<style>
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: "Cairo", sans-serif;
+.section{display:none}
+.active{display:block}
+
+input,select,textarea{
+width:100%;padding:10px;margin:10px 0;border:none;border-radius:8px
 }
 
-body {
-    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-    color: white;
-    min-height: 100vh;
+.card{
+background:rgba(255,255,255,0.1);
+padding:15px;
+margin:10px 0;
+border-radius:12px;
+backdrop-filter:blur(10px)
 }
 
-/* Navbar */
-nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px 50px;
-    background: rgba(255,255,255,0.05);
-    backdrop-filter: blur(10px);
-    position: sticky;
-    top: 0;
-    z-index: 100;
-}
-
-.logo {
-    font-size: 24px;
-    font-weight: bold;
-    color: #00ffd5;
-}
-
-nav .nav-links a {
-    color: white;
-    margin-right: 20px;
-    text-decoration: none;
-    transition: 0.3s;
-}
-
-nav .nav-links a:hover {
-    color: #00ffd5;
-}
-
-.auth-buttons {
-    display: flex;
-    gap: 10px;
-    align-items: center;
-}
-
-/* Hero */
-.hero {
-    text-align: center;
-    padding: 80px 20px;
-}
-
-.hero h1 {
-    font-size: 48px;
-    margin-bottom: 10px;
-}
-
-.hero p {
-    margin-bottom: 30px;
-    color: #ccc;
-}
-
-.btn {
-    padding: 10px 22px;
-    border-radius: 25px;
-    border: none;
-    cursor: pointer;
-    font-weight: 600;
-    transition: 0.3s;
-}
-
-.btn-primary {
-    background: #00ffd5;
-    color: black;
-}
-
-.btn-primary:hover {
-    background: #00ccaa;
-    box-shadow: 0 0 10px #00ffd5;
-}
-
-.btn-secondary {
-    background: transparent;
-    border: 1px solid #00ffd5;
-    color: white;
-}
-
-.btn-secondary:hover {
-    background: rgba(0, 255, 213, 0.1);
-}
-
-.btn-danger {
-    background: #ff4d4d;
-    color: white;
-    padding: 5px 12px;
-    font-size: 13px;
-    border-radius: 5px;
-}
-
-/* Jobs Section */
-.jobs {
-    padding: 50px;
-    max-width: 1000px;
-    margin: auto;
-}
-
-.jobs h2 {
-    text-align: center;
-    margin-bottom: 30px;
-}
-
-.job-card {
-    background: rgba(255,255,255,0.05);
-    padding: 20px;
-    margin-bottom: 20px;
-    border-radius: 15px;
-    transition: 0.3s;
-    border: 1px solid rgba(255,255,255,0.1);
-    position: relative;
-}
-
-.job-card:hover {
-    transform: translateY(-5px);
-    background: rgba(0,255,213,0.05);
-    border-color: #00ffd5;
-}
-
-.job-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-}
-
-.job-title {
-    font-size: 22px;
-    font-weight: bold;
-    color: #00ffd5;
-}
-
-.job-company {
-    color: #aaa;
-    margin: 5px 0 15px 0;
-    font-size: 14px;
-}
-
-.job-desc {
-    color: #eee;
-    line-height: 1.6;
-    margin-bottom: 15px;
-}
-
-.job-footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 15px;
-    padding-top: 15px;
-    border-top: 1px solid rgba(255,255,255,0.1);
-}
-
-/* Rating System */
-.rating-container {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-}
-
-.stars {
-    display: flex;
-    flex-direction: row-reverse;
-    gap: 2px;
-}
-
-.star {
-    font-size: 22px;
-    color: #444;
-    cursor: pointer;
-    transition: 0.2s;
-}
-
-.star:hover,
-.star:hover ~ .star,
-.star.active,
-.star.active ~ .star {
-    color: #ffca28;
-}
-
-.rating-count {
-    font-size: 12px;
-    color: #aaa;
-    margin-right: 5px;
-}
-
-/* Form Section */
-.form-section {
-    padding: 50px 20px;
-    background: rgba(0, 0, 0, 0.2);
-}
-
-.form-section h2 {
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-form {
-    max-width: 500px;
-    margin: auto;
-    background: rgba(255,255,255,0.02);
-    padding: 30px;
-    border-radius: 15px;
-    border: 1px solid rgba(255,255,255,0.05);
-}
-
-input, textarea {
-    width: 100%;
-    padding: 12px;
-    margin-bottom: 15px;
-    border-radius: 8px;
-    border: 1px solid rgba(255,255,255,0.2);
-    background: rgba(0,0,0,0.3);
-    color: white;
-}
-
-input:focus, textarea:focus {
-    outline: none;
-    border-color: #00ffd5;
-}
-
-/* Modal / Popup Styles */
-.modal {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.7);
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-}
-
-.modal-content {
-    background: #1a3038;
-    padding: 30px;
-    border-radius: 15px;
-    width: 90%;
-    max-width: 400px;
-    position: relative;
-    border: 1px solid #00ffd5;
-}
-
-.close-btn {
-    position: absolute;
-    top: 10px;
-    left: 15px;
-    font-size: 24px;
-    cursor: pointer;
-    color: #aaa;
-}
-
-.close-btn:hover {
-    color: white;
-}
-
-/* Profile Widget */
-.profile-card {
-    background: rgba(0, 255, 213, 0.1);
-    padding: 10px 15px;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    border: 1px solid rgba(0, 255, 213, 0.3);
-}
-
-.user-name {
-    font-weight: bold;
-    color: #00ffd5;
-}
-
-footer {
-    text-align: center;
-    padding: 20px;
-    background: rgba(0,0,0,0.4);
-    margin-top: 50px;
-}
-</style>
-</head>
-<body>
-
-<nav>
-    <div class="logo">شغلني</div>
-    <div class="nav-links">
-        <a href="#">الرئيسية</a>
-        <a href="#jobs-section">الوظائف</a>
-        <a href="#post-section">انشر وظيفة</a>
-    </div>
-    <div class="auth-buttons" id="auth-container">
-        <button class="btn btn-secondary" onclick="openModal('login-modal')">تسجيل دخول</button>
-        <button class="btn btn-primary" onclick="openModal('register-modal')">حساب جديد</button>
-    </div>
-</nav>
-
-<section class="hero">
-    <h1>ابدأ رحلتك المهنية الآن</h1>
-    <p>منصة شغلني تربط بين أصحاب العمل والباحثين عن الوظائف بسهولة واحترافية</p>
-    <a href="#jobs-section" class="btn btn-primary" style="text-decoration:none; display:inline-block;">تصفح الوظائف</a>
-    <a href="#post-section" class="btn btn-secondary" style="text-decoration:none; display:inline-block;">انشر وظيفة</a>
-</section>
-
-<section class="jobs" id="jobs-section">
-    <h2>أحدث الوظائف المتاحة</h2>
-    <div id="jobs-container">
-        </div>
-</section>
-
-<section class="form-section" id="post-section">
-    <h2>انشر وظيفة جديدة فعلياً</h2>
-    <form id="job-form" onsubmit="handlePostJob(event)">
-        <input type="text" id="job-title-input" placeholder="اسم الوظيفة (مثال: مطور فرونت اند)" required>
-        <input type="text" id="job-company-input" placeholder="اسم الشركة أو الجهة المعلنة" required>
-        <textarea id="job-desc-input" placeholder="وصف الوظيفة، المتطلبات، والشروط..." rows="5" required></textarea>
-        <button type="submit" class="btn btn-primary" style="width: 100%;">نشر الوظيفة فوراً</button>
-    </form>
-</section>
-
-<div id="login-modal" class="modal">
-    <div class="modal-content">
-        <span class="close-btn" onclick="closeModal('login-modal')">&times;</span>
-        <h3 style="margin-bottom:20px; text-align:center;">تسجيل الدخول</h3>
-        <form onsubmit="handleLogin(event)">
-            <input type="email" id="login-email" placeholder="البريد الإلكتروني" required>
-            <input type="password" id="login-pass" placeholder="كلمة المرور" required>
-            <button type="submit" class="btn btn-primary" style="width:100%;">دخول</button>
-        </form>
-    </div>
+.jobs{margin-top:20px}
+</style></head><body><div class="container"><nav>
+<h1>شغلني</h1>
+<div>
+<button onclick="showSection('login')">دخول</button>
+<button onclick="showSection('register')">إنشاء حساب</button>
+<button onclick="logout()">خروج</button>
 </div>
+</nav><!-- تسجيل --><div id="register" class="section active">
+<h2>إنشاء حساب</h2>
+<input id="regName" placeholder="الاسم">
+<input id="regEmail" placeholder="البريد">
+<input id="regPass" type="password" placeholder="كلمة المرور">
+<button onclick="register()">تسجيل</button>
+</div><!-- دخول --><div id="login" class="section">
+<h2>تسجيل الدخول</h2>
+<input id="logEmail" placeholder="البريد">
+<input id="logPass" type="password" placeholder="كلمة المرور">
+<button onclick="login()">دخول</button>
+</div><!-- لوحة --><div id="dashboard" class="section">
+<h2>لوحة التحكم</h2><h3>نشر وظيفة</h3>
+<input id="jobTitle" placeholder="عنوان الوظيفة">
+<textarea id="jobDesc" placeholder="وصف"></textarea><select id="jobProvince">
+<option value="">اختر المحافظة</option>
+<option>بغداد</option>
+<option>البصرة</option>
+<option>نينوى</option>
+<option>أربيل</option>
+<option>السليمانية</option>
+<option>كركوك</option>
+<option>النجف</option>
+<option>كربلاء</option>
+<option>الأنبار</option>
+<option>ديالى</option>
+<option>ذي قار</option>
+<option>المثنى</option>
+<option>واسط</option>
+<option>بابل</option>
+<option>صلاح الدين</option>
+<option>ميسان</option>
+<option>القادسية</option>
+</select><button onclick="addJob()">نشر</button>
 
-<div id="register-modal" class="modal">
-    <div class="modal-content">
-        <span class="close-btn" onclick="closeModal('register-modal')">&times;</span>
-        <h3 style="margin-bottom:20px; text-align:center;">إنشاء حساب جديد</h3>
-        <form onsubmit="handleRegister(event)">
-            <input type="text" id="reg-name" placeholder="الاسم الكامل" required>
-            <input type="email" id="reg-email" placeholder="البريد الإلكتروني" required>
-            <input type="password" id="reg-pass" placeholder="كلمة المرور من 6 خانات على الأقل" minlength="6" required>
-            <button type="submit" class="btn btn-primary" style="width:100%;">إنشاء الحساب</button>
-        </form>
-    </div>
+<hr><h3>تصفح الوظائف</h3><select id="filterProvince" onchange="renderJobs()">
+<option value="all">كل المحافظات</option>
+<option>بغداد</option>
+<option>البصرة</option>
+<option>نينوى</option>
+<option>أربيل</option>
+<option>السليمانية</option>
+<option>كركوك</option>
+<option>النجف</option>
+<option>كربلاء</option>
+<option>الأنبار</option>
+<option>ديالى</option>
+<option>ذي قار</option>
+<option>المثنى</option>
+<option>واسط</option>
+<option>بابل</option>
+<option>صلاح الدين</option>
+<option>ميسان</option>
+<option>القادسية</option>
+</select><div id="jobs" class="jobs"></div></div></div><script>
+
+// إدارة الأقسام
+function showSection(id){
+document.querySelectorAll(".section").forEach(s=>s.classList.remove("active"))
+document.getElementById(id).classList.add("active")
+}
+
+// تسجيل
+function register(){
+let users=JSON.parse(localStorage.getItem("users")||"[]")
+
+let user={
+name:regName.value,
+email:regEmail.value,
+pass:regPass.value
+}
+
+users.push(user)
+localStorage.setItem("users",JSON.stringify(users))
+alert("تم إنشاء الحساب")
+showSection("login")
+}
+
+// دخول
+function login(){
+let users=JSON.parse(localStorage.getItem("users")||"[]")
+
+let user=users.find(u=>u.email===logEmail.value && u.pass===logPass.value)
+
+if(user){
+sessionStorage.setItem("user",JSON.stringify(user))
+showSection("dashboard")
+renderJobs()
+}else{
+alert("بيانات خاطئة")
+}
+}
+
+// خروج
+function logout(){
+sessionStorage.removeItem("user")
+showSection("login")
+}
+
+// إضافة وظيفة
+function addJob(){
+let jobs=JSON.parse(localStorage.getItem("jobs")||"[]")
+
+let job={
+title:jobTitle.value,
+desc:jobDesc.value,
+province:jobProvince.value
+}
+
+jobs.push(job)
+localStorage.setItem("jobs",JSON.stringify(jobs))
+
+renderJobs()
+}
+
+// عرض وظائف
+function renderJobs(){
+let jobs=JSON.parse(localStorage.getItem("jobs")||"[]")
+let filter=filterProvince.value
+
+let html=""
+
+jobs.forEach(j=>{
+if(filter==="all" || j.province===filter){
+html+=`
+<div class="card">
+<h3>${j.title}</h3>
+<p>${j.desc}</p>
+<p>📍 ${j.province}</p>
 </div>
+`
+}
+})
 
-<footer>
-    <p>© 2026 منصة شغلني - جميع الحقوق محفوظة</p>
-</footer>
-
-<script>
-// --- البيانات الافتراضية الأولية في حال كانت الذاكرة فارغة ---
-const defaultJobs = [
-    { id: 1, title: "مصمم مواقع محترف", company: "شركة ابتكار التقنية", desc: "نبحث عن مصمم UI/UX متمكن من أدوات Figma و Adobe XD لبناء واجهات عصرية لمشاريعنا الحالية.", ratings: [5, 4, 5] },
-    { id: 2, title: "مطور ويب متكامل (Full-Stack)", company: "مؤسسة الحلول البرمجية", desc: "مطلوب مطور لديه خبرة جيدة في التعامل مع HTML, CSS, JavaScript بالإضافة إلى Node.js أو PHP لإدارة الخلفيات البرمجية.", ratings: [4, 4] }
-];
-
-// جلب البيانات من الـ LocalStorage أو تعيين الافتراضية
-let users = JSON.parse(localStorage.getItem('users')) || [];
-let jobs = JSON.parse(localStorage.getItem('jobs')) || defaultJobs;
-let currentUser = JSON.parse(localStorage.getItem('currentUser')) || null;
-
-if(!localStorage.getItem('jobs')){
-    localStorage.setItem('jobs', JSON.stringify(defaultJobs));
+document.getElementById("jobs").innerHTML=html
 }
 
-// عند تحميل الصفحة بالكامل
-window.onload = function() {
-    updateAuthUI();
-    renderJobs();
-};
-
-// --- إدارة النوافذ المنبثقة (Modals) ---
-function openModal(id) {
-    document.getElementById(id).style.display = 'flex';
-}
-function closeModal(id) {
-    document.getElementById(id).style.display = 'none';
+// تحميل تلقائي
+if(sessionStorage.getItem("user")){
+showSection("dashboard")
+renderJobs()
 }
 
-// --- نظام الحسابات (تسجيل، دخول، خروج) ---
-function handleRegister(e) {
-    e.preventDefault();
-    const name = document.getElementById('reg-name').value.trim();
-    const email = document.getElementById('reg-email').value.trim();
-    const pass = document.getElementById('reg-pass').value;
-
-    if(users.some(u => u.email === email)) {
-        alert("هذا البريد الإلكتروني مسجل بالفعل!");
-        return;
-    }
-
-    const newUser = { id: Date.now(), name, email, pass };
-    users.push(newUser);
-    localStorage.setItem('users', JSON.stringify(users));
-
-    currentUser = newUser;
-    localStorage.setItem('currentUser', JSON.stringify(currentUser));
-    
-    alert(`أهلاً بك يا ${name}! تم إنشاء حسابك بنجاح.`);
-    closeModal('register-modal');
-    updateAuthUI();
-    renderJobs(); // لإعادة التحديث وإظهار أزرار الحذف بناء على هويتك الجديدة
-}
-
-function handleLogin(e) {
-    e.preventDefault();
-    const email = document.getElementById('login-email').value.trim();
-    const pass = document.getElementById('login-pass').value;
-
-    const user = users.find(u => u.email === email && u.pass === pass);
-
-    if(!user) {
-        alert("البريد الإلكتروني أو كلمة المرور غير صحيحة!");
-        return;
-    }
-
-    currentUser = user;
-    localStorage.setItem('currentUser', JSON.stringify(currentUser));
-
-    alert(`مرحباً بعودتك، ${user.name}!`);
-    closeModal('login-modal');
-    updateAuthUI();
-    renderJobs();
-}
-
-function handleLogout() {
-    currentUser = null;
-    localStorage.removeItem('currentUser');
-    alert("تم تسجيل الخروج بنجاح.");
-    updateAuthUI();
-    renderJobs();
-}
-
-// تحديث الهيدر بناء على حالة الحساب (ملف شخصي مصغر)
-function updateAuthUI() {
-    const container = document.getElementById('auth-container');
-    if (currentUser) {
-        container.innerHTML = `
-            <div class="profile-card">
-                <span>مرحباً، <span class="user-name">${currentUser.name}</span></span>
-            </div>
-            <button class="btn btn-secondary" onclick="handleLogout()" style="padding: 5px 15px; font-size:14px;">خروج</button>
-        `;
-    } else {
-        container.innerHTML = `
-            <button class="btn btn-secondary" onclick="openModal('login-modal')">تسجيل دخول</button>
-            <button class="btn btn-primary" onclick="openModal('register-modal')">حساب جديد</button>
-        `;
-    }
-}
-
-// --- نظام إدارة ونشر الوظائف ديناميكياً ---
-function renderJobs() {
-    const container = document.getElementById('jobs-container');
-    container.innerHTML = '';
-
-    if(jobs.length === 0) {
-        container.innerHTML = `<p style="text-align:center; color:#aaa; padding:20px;">لا توجد وظائف معروضة حالياً. كن أول من ينشر وظيفة!</p>`;
-        return;
-    }
-
-    jobs.forEach(job => {
-        // حساب متوسط التقييم الحالي للوظيفة
-        const avgRating = job.ratings && job.ratings.length > 0 
-            ? (job.ratings.reduce((a, b) => a + b, 0) / job.ratings.length).toFixed(1) 
-            : 0;
-
-        const card = document.createElement('div');
-        card.className = 'job-card';
-        
-        let deleteBtn = '';
-        // السماح بحذف الوظيفة إذا كان المستخدم هو من نشرها (أو لو كانت افتراضية والكل يستطيع تجربتها)
-        if(currentUser && (job.postedBy === currentUser.id || !job.postedBy)) {
-            deleteBtn = `<button class="btn btn-danger" onclick="deleteJob(${job.id})">حذف</button>`;
-        }
-
-        card.innerHTML = `
-            <div class="job-header">
-                <div>
-                    <div class="job-title">${escapeHTML(job.title)}</div>
-                    <div class="job-company">${escapeHTML(job.company)}</div>
-                </div>
-                ${deleteBtn}
-            </div>
-            <p class="job-desc">${escapeHTML(job.desc)}</p>
-            
-            <div class="job-footer">
-                <a href="mailto:careers@shoghlny.com?subject=التقديم على وظيفة: ${encodeURIComponent(job.title)}" class="job-btn">تقديم سريع</a>
-                
-                <div class="rating-container">
-                    <span class="rating-count">(${job.ratings ? job.ratings.length : 0} تقييم - متوسط: ${avgRating})</span>
-                    <div class="stars" data-job-id="${job.id}">
-                        <span class="star ${avgRating >= 5 ? 'active' : ''}" onclick="rateJob(${job.id}, 5)">★</span>
-                        <span class="star ${avgRating >= 4 ? 'active' : ''}" onclick="rateJob(${job.id}, 4)">★</span>
-                        <span class="star ${avgRating >= 3 ? 'active' : ''}" onclick="rateJob(${job.id}, 3)">★</span>
-                        <span class="star ${avgRating >= 2 ? 'active' : ''}" onclick="rateJob(${job.id}, 2)">★</span>
-                        <span class="star ${avgRating >= 1 ? 'active' : ''}" onclick="rateJob(${job.id}, 1)">★</span>
-                    </div>
-                </div>
-            </div>
-        `;
-        container.appendChild(card);
-    });
-}
-
-function handlePostJob(e) {
-    e.preventDefault();
-
-    if(!currentUser) {
-        alert("عذراً، يجب عليك تسجيل الدخول أو إنشاء حساب أولاً لكي تتمكن من نشر وظيفة!");
-        openModal('login-modal');
-        return;
-    }
-
-    const title = document.getElementById('job-title-input').value.trim();
-    const company = document.getElementById('job-company-input').value.trim();
-    const desc = document.getElementById('job-desc-input').value.trim();
-
-    const newJob = {
-        id: Date.now(),
-        title,
-        company,
-        desc,
-        ratings: [],
-        postedBy: currentUser.id // ربط الوظيفة بصاحب الحساب الحالي
-    };
-
-    jobs.unshift(newJob); // إضافة الوظيفة في الأعلى
-    localStorage.setItem('jobs', JSON.stringify(jobs));
-
-    // ريست للفروم وإعادة البناء
-    document.getElementById('job-form').reset();
-    renderJobs();
-    alert("تم نشر وظيفتك بنجاح وعرضها فوراً في القائمة!");
-    
-    // سكرول تلقائي لرؤية الوظيفة المضافة
-    document.getElementById('jobs-section').scrollIntoView({ behavior: 'smooth' });
-}
-
-function deleteJob(id) {
-    if(confirm("هل أنت متأكد من رغبتك في حذف هذه الوظيفة نهائياً؟")) {
-        jobs = jobs.filter(j => j.id !== id);
-        localStorage.setItem('jobs', JSON.stringify(jobs));
-        renderJobs();
-    }
-}
-
-// --- نظام التقييم التفاعلي ---
-function rateJob(jobId, ratingValue) {
-    if(!currentUser) {
-        alert("برجاء تسجيل الدخول أولاً لتتمكن من تقييم الوظائف!");
-        openModal('login-modal');
-        return;
-    }
-
-    const job = jobs.find(j => j.id === jobId);
-    if(job) {
-        if(!job.ratings) job.ratings = [];
-        job.ratings.push(ratingValue);
-        localStorage.setItem('jobs', JSON.stringify(jobs));
-        renderJobs();
-    }
-}
-
-// دالة حماية لمنع حقن أكواد خبيثة (XSS Security)
-function escapeHTML(str) {
-    return str.replace(/[&<>'"]/g, 
-        tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag)
-    );
-}
-</script>
-
-</body>
-  </html>
+</script></body>
+</html>
