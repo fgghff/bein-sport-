@@ -1,180 +1,290 @@
-<!DOCTYPE html><html lang="ar" dir="rtl">
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>شغلني | منصة التوظيف</title><link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet"><style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:"Cairo",sans-serif}
-body{background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);color:#fff}
-.container{width:90%;margin:auto;padding:20px}
-nav{display:flex;justify-content:space-between;align-items:center;padding:15px 0}
-nav h1{color:#00eaff}
-nav button{padding:8px 15px;border:none;border-radius:8px;cursor:pointer;background:#00eaff;color:#000}
+<title>شغلني</title>
+<style>
+body{
+margin:0;
+font-family:Tahoma;
+background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+color:white;
+}
 
-.section{display:none}
-.active{display:block}
+header{
+display:flex;
+justify-content:space-between;
+padding:15px;
+}
 
-input,select,textarea{
-width:100%;padding:10px;margin:10px 0;border:none;border-radius:8px
+button{
+padding:10px 15px;
+border:none;
+border-radius:8px;
+background:#00d4ff;
+color:#000;
+font-weight:bold;
+cursor:pointer;
+margin:3px;
+}
+
+.container{
+padding:20px;
+max-width:900px;
+margin:auto;
+}
+
+input,textarea,select{
+width:100%;
+padding:12px;
+margin:8px 0;
+border-radius:10px;
+border:none;
 }
 
 .card{
 background:rgba(255,255,255,0.1);
 padding:15px;
+border-radius:15px;
 margin:10px 0;
-border-radius:12px;
-backdrop-filter:blur(10px)
 }
 
-.jobs{margin-top:20px}
-</style></head><body><div class="container"><nav>
-<h1>شغلني</h1>
+.deleteBtn{
+background:red;
+color:white;
+float:left;
+}
+
+.hidden{display:none}
+</style>
+</head>
+
+<body>
+
+<header>
 <div>
-<button onclick="showSection('login')">دخول</button>
-<button onclick="showSection('register')">إنشاء حساب</button>
+<button onclick="showLogin()">دخول</button>
+<button onclick="showRegister()">إنشاء حساب</button>
 <button onclick="logout()">خروج</button>
 </div>
-</nav><!-- تسجيل --><div id="register" class="section active">
-<h2>إنشاء حساب</h2>
-<input id="regName" placeholder="الاسم">
-<input id="regEmail" placeholder="البريد">
+<h2>شغلني</h2>
+</header>
+
+<div class="container">
+
+<!-- تسجيل -->
+<div id="registerBox" class="hidden">
+<h3>إنشاء حساب</h3>
+<input id="regUser" placeholder="اسم المستخدم">
 <input id="regPass" type="password" placeholder="كلمة المرور">
-<button onclick="register()">تسجيل</button>
-</div><!-- دخول --><div id="login" class="section">
-<h2>تسجيل الدخول</h2>
-<input id="logEmail" placeholder="البريد">
+<button onclick="register()">إنشاء</button>
+</div>
+
+<!-- دخول -->
+<div id="loginBox" class="hidden">
+<h3>تسجيل دخول</h3>
+<input id="logUser" placeholder="اسم المستخدم">
 <input id="logPass" type="password" placeholder="كلمة المرور">
 <button onclick="login()">دخول</button>
-</div><!-- لوحة --><div id="dashboard" class="section">
-<h2>لوحة التحكم</h2><h3>نشر وظيفة</h3>
-<input id="jobTitle" placeholder="عنوان الوظيفة">
-<textarea id="jobDesc" placeholder="وصف"></textarea><select id="jobProvince">
-<option value="">اختر المحافظة</option>
-<option>بغداد</option>
-<option>البصرة</option>
-<option>نينوى</option>
-<option>أربيل</option>
-<option>السليمانية</option>
-<option>كركوك</option>
-<option>النجف</option>
-<option>كربلاء</option>
-<option>الأنبار</option>
-<option>ديالى</option>
-<option>ذي قار</option>
-<option>المثنى</option>
-<option>واسط</option>
-<option>بابل</option>
-<option>صلاح الدين</option>
-<option>ميسان</option>
-<option>القادسية</option>
-</select><button onclick="addJob()">نشر</button>
+</div>
 
-<hr><h3>تصفح الوظائف</h3><select id="filterProvince" onchange="renderJobs()">
-<option value="all">كل المحافظات</option>
-<option>بغداد</option>
-<option>البصرة</option>
-<option>نينوى</option>
-<option>أربيل</option>
-<option>السليمانية</option>
-<option>كركوك</option>
-<option>النجف</option>
-<option>كربلاء</option>
-<option>الأنبار</option>
-<option>ديالى</option>
-<option>ذي قار</option>
-<option>المثنى</option>
-<option>واسط</option>
-<option>بابل</option>
-<option>صلاح الدين</option>
-<option>ميسان</option>
-<option>القادسية</option>
-</select><div id="jobs" class="jobs"></div></div></div><script>
+<!-- لوحة -->
+<div id="dashboard" class="hidden">
 
-// إدارة الأقسام
-function showSection(id){
-document.querySelectorAll(".section").forEach(s=>s.classList.remove("active"))
-document.getElementById(id).classList.add("active")
-}
+<h2>لوحة التحكم</h2>
 
-// تسجيل
-function register(){
-let users=JSON.parse(localStorage.getItem("users")||"[]")
-
-let user={
-name:regName.value,
-email:regEmail.value,
-pass:regPass.value
-}
-
-users.push(user)
-localStorage.setItem("users",JSON.stringify(users))
-alert("تم إنشاء الحساب")
-showSection("login")
-}
-
-// دخول
-function login(){
-let users=JSON.parse(localStorage.getItem("users")||"[]")
-
-let user=users.find(u=>u.email===logEmail.value && u.pass===logPass.value)
-
-if(user){
-sessionStorage.setItem("user",JSON.stringify(user))
-showSection("dashboard")
-renderJobs()
-}else{
-alert("بيانات خاطئة")
-}
-}
-
-// خروج
-function logout(){
-sessionStorage.removeItem("user")
-showSection("login")
-}
-
-// إضافة وظيفة
-function addJob(){
-let jobs=JSON.parse(localStorage.getItem("jobs")||"[]")
-
-let job={
-title:jobTitle.value,
-desc:jobDesc.value,
-province:jobProvince.value
-}
-
-jobs.push(job)
-localStorage.setItem("jobs",JSON.stringify(jobs))
-
-renderJobs()
-}
-
-// عرض وظائف
-function renderJobs(){
-let jobs=JSON.parse(localStorage.getItem("jobs")||"[]")
-let filter=filterProvince.value
-
-let html=""
-
-jobs.forEach(j=>{
-if(filter==="all" || j.province===filter){
-html+=`
+<!-- الملف الشخصي -->
 <div class="card">
+<h3>ملفي الشخصي (CV)</h3>
+<textarea id="cv" placeholder="اكتب خبراتك هنا"></textarea>
+<button onclick="saveCV()">حفظ</button>
+</div>
+
+<!-- نشر -->
+<div class="card">
+<h3>نشر وظيفة</h3>
+<input id="title" placeholder="عنوان الوظيفة">
+<textarea id="desc" placeholder="الوصف"></textarea>
+
+<select id="city">
+<option>بغداد</option>
+<option>البصرة</option>
+<option>الموصل</option>
+<option>أربيل</option>
+<option>دهوك</option>
+<option>كربلاء</option>
+<option>النجف</option>
+<option>السليمانية</option>
+<option>ديالى</option>
+<option>الأنبار</option>
+<option>واسط</option>
+<option>بابل</option>
+<option>صلاح الدين</option>
+<option>ميسان</option>
+<option>ذي قار</option>
+<option>المثنى</option>
+<option>كركوك</option>
+</select>
+
+<button onclick="addJob()">نشر</button>
+</div>
+
+</div>
+
+<!-- التصفح -->
+<div class="container">
+<h2>تصفح الوظائف</h2>
+
+<select id="filter" onchange="showJobs()">
+<option value="الكل">الكل</option>
+<option>بغداد</option>
+<option>البصرة</option>
+<option>الموصل</option>
+<option>أربيل</option>
+<option>دهوك</option>
+<option>كربلاء</option>
+<option>النجف</option>
+<option>السليمانية</option>
+<option>ديالى</option>
+<option>الأنبار</option>
+<option>واسط</option>
+<option>بابل</option>
+<option>صلاح الدين</option>
+<option>ميسان</option>
+<option>ذي قار</option>
+<option>المثنى</option>
+<option>كركوك</option>
+</select>
+
+<div id="jobs"></div>
+</div>
+
+</div>
+
+<script>
+
+let users = JSON.parse(localStorage.getItem("users")) || [];
+let jobs = JSON.parse(localStorage.getItem("jobs")) || [];
+let currentUser = localStorage.getItem("currentUser");
+
+if(currentUser){
+document.getElementById("dashboard").classList.remove("hidden");
+loadCV();
+}
+
+function showRegister(){
+registerBox.classList.toggle("hidden");
+loginBox.classList.add("hidden");
+}
+
+function showLogin(){
+loginBox.classList.toggle("hidden");
+registerBox.classList.add("hidden");
+}
+
+function register(){
+let u = regUser.value;
+let p = regPass.value;
+
+if(!u || !p){alert("املأ البيانات");return;}
+
+if(users.find(x=>x.user==u)){
+alert("المستخدم موجود");
+return;
+}
+
+users.push({user:u,pass:p,cv:""});
+localStorage.setItem("users",JSON.stringify(users));
+alert("تم إنشاء الحساب");
+}
+
+function login(){
+let u = logUser.value;
+let p = logPass.value;
+
+let user = users.find(x=>x.user==u && x.pass==p);
+
+if(!user){
+alert("بيانات خاطئة");
+return;
+}
+
+localStorage.setItem("currentUser",u);
+currentUser=u;
+
+document.getElementById("dashboard").classList.remove("hidden");
+loginBox.classList.add("hidden");
+
+loadCV();
+}
+
+function logout(){
+localStorage.removeItem("currentUser");
+location.reload();
+}
+
+function saveCV(){
+let user = users.find(x=>x.user==currentUser);
+user.cv = cv.value;
+localStorage.setItem("users",JSON.stringify(users));
+alert("تم حفظ CV");
+}
+
+function loadCV(){
+let user = users.find(x=>x.user==currentUser);
+if(user) cv.value = user.cv || "";
+}
+
+function addJob(){
+let t = title.value;
+let d = desc.value;
+let c = city.value;
+
+if(!t || !d){alert("املأ البيانات");return;}
+
+jobs.push({
+id:Date.now(),
+title:t,
+desc:d,
+city:c,
+owner:currentUser
+});
+
+localStorage.setItem("jobs",JSON.stringify(jobs));
+title.value=""; desc.value="";
+showJobs();
+}
+
+function deleteJob(id){
+jobs = jobs.filter(j=>j.id!==id);
+localStorage.setItem("jobs",JSON.stringify(jobs));
+showJobs();
+}
+
+function showJobs(){
+let f = filter.value;
+jobsDiv.innerHTML="";
+
+jobs.filter(j=> f=="الكل" || j.city==f)
+.forEach(j=>{
+
+let div=document.createElement("div");
+div.className="card";
+
+div.innerHTML=`
 <h3>${j.title}</h3>
 <p>${j.desc}</p>
-<p>📍 ${j.province}</p>
-</div>
-`
-}
-})
+<p>${j.city}</p>
+${j.owner==currentUser ? `<button class="deleteBtn" onclick="deleteJob(${j.id})">حذف</button>`:""}
+`;
 
-document.getElementById("jobs").innerHTML=html
-}
-
-// تحميل تلقائي
-if(sessionStorage.getItem("user")){
-showSection("dashboard")
-renderJobs()
+jobsDiv.appendChild(div);
+});
 }
 
-</script></body>
+showJobs();
+
+</script>
+
+</body>
 </html>
