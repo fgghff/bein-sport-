@@ -1,546 +1,634 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
-<head>  
-<meta charset="UTF-8">  
-<meta name="viewport" content="width=device-width, initial-scale=1.0">  
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>شغلني | منصة التوظيف</title>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
-<style>  
+<style>
+/* تصفير الإعدادات وضبط الخط العام */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     font-family: "Cairo", sans-serif;
-}  
-
-body {
-    background-color: #0b1a20;
-    color: #fff;
-    font-size: 14px;
 }
 
-/* شريط التنقل العلوي */
+body {
+    background-color: #061318;
+    color: #ffffff;
+    padding-bottom: 20px;
+}
+
+/* شريط التنقل العلوي (Navbar) */
 nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 15px 4%;
-    background-color: #0c1f26;
-    border-bottom: 1px solid rgba(0, 234, 255, 0.1);
-}  
+    background-color: #0b1d24;
+    padding: 15px 50px;
+    border-bottom: 1px solid #0f2730;
+}
 
-nav .brand-zone {
+.nav-right {
     display: flex;
     align-items: center;
-    gap: 30px;
+    gap: 40px;
 }
 
-nav h1 {
-    color: #00eaff;
-    font-size: 26px;
-    font-weight: 700;
-}  
+.logo {
+    font-size: 28px;
+    font-weight: bold;
+    color: #00ffd5;
+}
 
-.nav-menu {
+.nav-links {
     display: flex;
-    gap: 20px;
+    gap: 25px;
 }
 
-.nav-menu a {
-    color: #b0c4de;
+.nav-links a {
+    color: #a2b7c0;
     text-decoration: none;
     font-size: 15px;
     font-weight: 600;
-    transition: 0.3s;
     cursor: pointer;
+    transition: 0.3s;
 }
 
-.nav-menu a:hover, .nav-menu a.active-link {
-    color: #00eaff;
+.nav-links a:hover, .nav-links a.active {
+    color: #ffffff;
 }
 
-nav .auth-zone {
+.nav-auth {
     display: flex;
     gap: 12px;
 }
 
-nav button {
+.nav-auth button {
     padding: 8px 18px;
-    border: 1px solid #00eaff;
     border-radius: 6px;
-    cursor: pointer;
-    background: transparent;
-    color: #00eaff;
+    font-size: 14px;
     font-weight: 600;
+    cursor: pointer;
     transition: 0.3s;
-}  
-
-nav button.btn-fill {
-    background: #00eaff;
-    color: #0b1a20;
 }
 
-nav button:hover {
-    box-shadow: 0 0 10px rgba(0, 234, 255, 0.3);
+.btn-outline {
+    background: transparent;
+    border: 1px solid #00ffd5;
+    color: #00ffd5;
 }
 
-/* تخطيط الصفحة الرئيسي */
-.main-wrapper {
-    max-width: 1300px;
+.btn-fill {
+    background: #00ffd5;
+    border: 1px solid #00ffd5;
+    color: #061318;
+}
+
+.nav-auth button:hover {
+    opacity: 0.9;
+    box-shadow: 0 0 8px rgba(0, 255, 213, 0.2);
+}
+
+/* الحاوية الرئيسية للتصميم ثنائي الأعمدة */
+.main-container {
+    max-width: 1400px;
     margin: 30px auto;
     padding: 0 20px;
     display: grid;
-    grid-template-columns: 1fr 350px;
-    gap: 30px;
+    grid-template-columns: 1fr 340px;
+    gap: 25px;
 }
 
-@media (max-width: 992px) {
-    .main-wrapper {
-        grid-template-columns: 1fr;
-    }
-}
-
-/* الواجهات والأقسام المستقلة */
-.content-area {
+/* العمود الأيمن الكبير: تصفح وقوائم الوظائف */
+.main-content {
     display: flex;
     flex-direction: column;
     gap: 25px;
 }
 
-.sidebar-area {
-    display: flex;
-    flex-direction: column;
-    gap: 25px;
-}
-
-.section {
-    display: none;
-}
-
-.section.active {
-    display: block;
-}
-
-/* الحاويات والكروت المطبقة من الصورة */
-.panel-card {
-    background: rgba(16, 38, 47, 0.7);
-    border: 1px solid rgba(255, 255, 255, 0.05);
+/* كروت العناوين الكبيرة والمربعات المظلمة */
+.dark-panel {
+    background-color: #0b1d24;
     border-radius: 12px;
     padding: 25px;
+    border: 1px solid #0f2730;
 }
 
-.panel-title {
+.panel-header-title {
     display: flex;
     align-items: center;
     gap: 10px;
-    font-size: 20px;
-    font-weight: 700;
-    margin-bottom: 8px;
+    font-size: 22px;
+    font-weight: bold;
+    color: #ffffff;
+}
+
+.panel-header-icon {
+    color: #00ffd5;
+    font-size: 24px;
 }
 
 .panel-subtitle {
-    color: #8fa0a6;
+    color: #728a95;
     font-size: 13px;
-    margin-bottom: 20px;
+    margin-top: 5px;
+    margin-bottom: 25px;
 }
 
-/* فلاتر البحث والمدخلات */
-.search-grid {
-    display: grid;
-    grid-template-columns: 1fr 1.5fr;
-    gap: 15px;
-    background: #0d232c;
-    padding: 15px;
+/* شريط البحث المطور المدمج بالفلتر والمكّبر */
+.search-box-wrapper {
+    background-color: #08171e;
     border-radius: 8px;
+    padding: 15px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    border: 1px solid #0d252f;
 }
 
-.input-group {
+.filter-group {
     display: flex;
     flex-direction: column;
-    gap: 5px;
+    gap: 6px;
 }
 
-.input-group label {
-    font-size: 12px;
-    color: #8fa0a6;
-}
-
-.search-grid input, .search-grid select, 
-.form-section input, .form-section select, .form-section textarea {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 6px;
-    background: #112933;
-    color: #fff;
-    outline: none;
+.filter-group label {
     font-size: 13px;
+    color: #728a95;
 }
 
-.search-grid input:focus, .search-grid select:focus, 
-.form-section input:focus, .form-section select:focus, .form-section textarea:focus {
-    border-color: #00eaff;
+.filter-group select {
+    background-color: #0b1d24;
+    color: #ffffff;
+    border: 1px solid #13323f;
+    padding: 10px;
+    border-radius: 6px;
+    outline: none;
+    font-size: 14px;
 }
 
-/* بطاقات الوظائف الدينية */
-.job-item-card {
-    background: #10262f;
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    border-radius: 10px;
-    padding: 20px;
-    margin-bottom: 15px;
+.search-input-container {
     position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.search-input-container input {
+    background-color: #0b1d24;
+    color: #ffffff;
+    border: 1px solid #13323f;
+    padding: 10px 35px 10px 10px;
+    border-radius: 6px;
+    outline: none;
+    font-size: 14px;
+}
+
+.search-icon {
+    position: absolute;
+    right: 12px;
+    top: 37px;
+    color: #728a95;
+}
+
+.section-divider-title {
+    font-size: 16px;
+    color: #a2b7c0;
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+
+/* كروت عرض الوظائف الاحترافية */
+.job-card {
+    background-color: #0b1d24;
+    border-radius: 12px;
+    padding: 25px;
+    border: 1px solid #0f2730;
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
     transition: 0.3s;
 }
 
-.job-item-card:hover {
-    border-color: rgba(0, 234, 255, 0.3);
+.job-card:hover {
+    border-color: rgba(0, 255, 213, 0.3);
 }
 
-.job-item-header {
+.job-card-top {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
 }
 
-.job-item-title {
-    color: #00eaff;
-    font-size: 18px;
-    font-weight: 700;
-    margin-bottom: 5px;
+.job-card-title {
+    color: #00ffd5;
+    font-size: 20px;
+    font-weight: bold;
 }
 
-.job-meta-line {
+.job-card-meta {
     display: flex;
     flex-direction: column;
     gap: 8px;
-    align-items: flex-end;
-    color: #8fa0a6;
+    margin-top: 8px;
+    color: #a2b7c0;
+    font-size: 14px;
+}
+
+.job-card-meta-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.job-date-badge {
+    color: #728a95;
     font-size: 13px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
 }
 
-.job-item-desc {
+.job-card-body {
     color: #d1dce0;
-    margin: 15px 0;
+    font-size: 14px;
     line-height: 1.6;
+    margin: 15px 0;
 }
 
-.job-salary {
-    font-weight: 600;
-    color: #fff;
+.job-card-salary {
+    font-size: 15px;
+    color: #ffffff;
     margin-bottom: 15px;
 }
 
-.job-item-footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-top: 1px solid rgba(255, 255, 255, 0.05);
-    padding-top: 15px;
-}
-
-.btn-action {
-    background: #00eaff;
-    color: #0b1a20;
+.btn-view-details {
+    background-color: #00ffd5;
+    color: #061318;
     border: none;
     padding: 8px 20px;
     border-radius: 6px;
-    font-weight: 700;
+    font-weight: bold;
+    font-size: 14px;
     cursor: pointer;
+    align-self: flex-start;
+    transition: 0.3s;
 }
 
-/* الجانب الأيمن: كرت المستخدم */
-.user-sidebar-card {
-    background: #10262f;
+.btn-view-details:hover {
+    opacity: 0.9;
+}
+
+/* العمود الأيسر: كروت الحساب ونشر الوظيفة */
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+/* كرت حساب المستخدم الشخصي */
+.user-profile-card {
+    background-color: #0b1d24;
     border-radius: 12px;
     padding: 30px 20px;
     text-align: center;
+    border: 1px solid #0f2730;
 }
 
-.user-avatar-circle {
-    width: 75px;
-    height: 75px;
-    background: #173845;
-    color: #00eaff;
+.avatar-wrapper {
+    width: 80px;
+    height: 80px;
     border-radius: 50%;
+    background-color: #122d37;
+    border: 2px solid #00ffd5;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    font-size: 35px;
-    margin-bottom: 15px;
-    border: 2px solid #00eaff;
+    font-size: 38px;
+    color: #00ffd5;
+    margin-bottom: 12px;
+    cursor: pointer;
+    overflow: hidden;
 }
 
-.user-sidebar-name {
+.avatar-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.user-profile-name {
     font-size: 18px;
-    font-weight: 700;
-    margin-bottom: 6px;
+    font-weight: bold;
+    color: #ffffff;
 }
 
-.badge-owner {
-    background: rgba(0, 234, 255, 0.1);
-    color: #00eaff;
+.user-role-badge {
+    background-color: rgba(0, 255, 213, 0.08);
+    color: #00ffd5;
+    font-size: 12px;
     padding: 3px 12px;
     border-radius: 4px;
-    font-size: 11px;
     display: inline-block;
+    margin-top: 6px;
     margin-bottom: 25px;
 }
 
-.sidebar-menu-list {
+.sidebar-menu {
     display: flex;
     flex-direction: column;
     text-align: right;
-    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    border-top: 1px solid #0f2730;
     padding-top: 15px;
 }
 
-.sidebar-menu-item {
+.sidebar-menu-btn {
     display: flex;
     align-items: center;
     gap: 12px;
     padding: 12px 15px;
-    color: #b0c4de;
+    color: #a2b7c0;
     text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
     border-radius: 6px;
     cursor: pointer;
     transition: 0.3s;
-    font-weight: 600;
 }
 
-.sidebar-menu-item:hover, .sidebar-menu-item.active-menu {
-    background: rgba(0, 234, 255, 0.05);
-    color: #00eaff;
+.sidebar-menu-btn:hover, .sidebar-menu-btn.active {
+    background-color: #08171e;
+    color: #00ffd5;
 }
 
-/* الأزرار والنماذج الجانبية */
-.side-form-card {
-    background: #10262f;
+/* نموذج نشر الوظيفة السريع المطبق من صورتك */
+.post-job-sidebar-card {
+    background-color: #0b1d24;
     border-radius: 12px;
-    padding: 20px;
+    padding: 25px 20px;
+    border: 1px solid #0f2730;
 }
 
-.side-form-card h3 {
+.sidebar-card-title {
     font-size: 16px;
+    font-weight: bold;
     margin-bottom: 15px;
     display: flex;
     align-items: center;
     gap: 8px;
 }
 
-.side-form-card input, .side-form-card select, .side-form-card textarea {
-    background: #0d1f26;
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    margin-bottom: 12px;
-    color: white;
-    padding: 10px;
-    border-radius: 6px;
+.sidebar-form input, .sidebar-form textarea, .sidebar-form select {
     width: 100%;
-}
-
-.btn-submit-job {
-    background: #00eaff;
-    color: #0b1a20;
-    width: 100%;
+    background-color: #08171e;
+    border: 1px solid #13323f;
+    color: #ffffff;
     padding: 12px;
-    border: none;
     border-radius: 6px;
-    font-weight: 700;
-    cursor: pointer;
+    margin-bottom: 12px;
+    outline: none;
+    font-size: 14px;
 }
 
-/* معلومات إضافية جانبية */
-.info-sidebar-box {
-    background: rgba(0, 234, 255, 0.02);
-    border: 1px solid rgba(0, 234, 255, 0.1);
+.sidebar-form input:focus, .sidebar-form textarea:focus, .sidebar-form select:focus {
+    border-color: #00ffd5;
+}
+
+.btn-post-submit {
+    width: 100%;
+    background-color: #00ffd5;
+    color: #061318;
+    border: none;
+    padding: 12px;
+    border-radius: 6px;
+    font-weight: bold;
+    font-size: 14px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn-post-submit:hover {
+    opacity: 0.9;
+}
+
+/* كرت المعلومات الجانبي السفلي */
+.info-sidebar-card {
+    background-color: rgba(0, 255, 213, 0.01);
+    border: 1px solid rgba(0, 255, 213, 0.1);
     border-radius: 12px;
     padding: 20px;
 }
 
-.info-box-header {
-    color: #00eaff;
-    font-weight: 700;
-    margin-bottom: 10px;
+.info-card-header {
+    color: #00ffd5;
+    font-weight: bold;
+    margin-bottom: 8px;
     display: flex;
     align-items: center;
     gap: 8px;
 }
 
-/* جدول الوظائف المنشورة أسفل الصفحة */
-.table-panel {
+/* جدول الوظائف المنشورة عريض وعام في الأسفل */
+.table-panel-card {
     grid-column: 1 / -1;
-    background: #10262f;
+    background-color: #0b1d24;
     border-radius: 12px;
     padding: 25px;
+    border: 1px solid #0f2730;
 }
 
-.manage-table {
+.jobs-table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 15px;
     text-align: right;
 }
 
-.manage-table th {
-    color: #8fa0a6;
+.jobs-table th {
+    color: #728a95;
+    font-size: 14px;
     font-weight: 600;
     padding: 12px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    border-bottom: 1px solid #0f2730;
 }
 
-.manage-table td {
+.jobs-table td {
     padding: 15px 12px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    border-bottom: 1px solid #0f2730;
+    font-size: 14px;
 }
 
-.btn-delete {
-    background: #ff4d4d;
-    color: white;
+.btn-delete-job {
+    background-color: #e74c3c;
+    color: #ffffff;
     border: none;
     padding: 5px 15px;
     border-radius: 4px;
     cursor: pointer;
+    font-size: 13px;
 }
 
-/* نظام النوافذ المنبثقة للتسجيل والدخول */
-.modal-overlay {
+/* المودالات المنبثقة للـ CV والتسجيل والدخول لعدم حدوث أخطاء تنقل */
+.popup-overlay {
     display: none;
     position: fixed;
-    top:0; left:0; width:100%; height:100%;
-    background: rgba(0,0,0,0.7);
-    z-index: 1000;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 2000;
     align-items: center;
     justify-content: center;
 }
-.modal-window {
-    background: #10262f;
-    border: 1px solid #00eaff;
+
+.popup-box {
+    background-color: #0b1d24;
+    border: 1px solid #00ffd5;
     border-radius: 12px;
     padding: 30px;
     width: 90%;
     max-width: 450px;
 }
 
+.popup-box h3 {
+    color: #00ffd5;
+    margin-bottom: 20px;
+}
+
+.popup-box input, .popup-box select {
+    width: 100%;
+    background-color: #08171e;
+    border: 1px solid #13323f;
+    color: #ffffff;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 6px;
+    outline: none;
+}
+
 footer {
     text-align: center;
-    padding: 30px;
-    color: #8fa0a6;
-    font-size: 13px;
-    margin-top: 50px;
-    border-top: 1px solid rgba(255,255,255,0.05);
+    padding: 25px;
+    color: #728a95;
+    font-size: 14px;
+    margin-top: 40px;
+    border-top: 1px solid #0f2730;
 }
 </style>
 </head>
 <body>
 
 <nav>
-    <div class="brand-zone">
-        <h1>شغلني</h1>
-        <div class="nav-menu">
-            <a onclick="switchTab('browse')" class="active-link">الرئيسية</a>
-            <a onclick="switchTab('browse')">تصفح الوظائف</a>
-            <a onclick="switchTab('post')">انشر وظيفة</a>
-            <a onclick="switchTab('profile')">ملفي الشخصي</a>
+    <div class="nav-right">
+        <div class="logo">شغلني</div>
+        <div class="nav-links">
+            <a onclick="scrollToSection('browse-target')" class="active">الرئيسية</a>
+            <a onclick="scrollToSection('browse-target')">تصفح الوظائف</a>
+            <a onclick="scrollToSection('post-target')">انشر وظيفة</a>
+            <a onclick="openProfileModal()">ملفي الشخصي</a>
         </div>
     </div>
-    <div class="auth-zone" id="auth-buttons-container">
+    <div class="nav-auth" id="header-auth-buttons">
         </div>
 </nav>
 
-<div class="main-wrapper">
-    <div class="content-area">
+<div class="main-container">
+    
+    <div class="main-content" id="browse-target">
         
-        <div id="browse-section" class="section active">
-            <div class="panel-card" style="margin-bottom: 25px;">
-                <div class="panel-title">💼 تصفح الوظائف</div>
-                <div class="panel-subtitle">ابحث عن الفرصة المناسبة لك</div>
-                
-                <div class="search-grid">
-                    <div class="input-group">
-                        <label>اختر المحافظة</label>
-                        <select id="filterProvince" onchange="renderJobs()">
-                            <option value="all">كل المحافظات</option>
-                            <option>بغداد</option>
-                            <option>البصرة</option>
-                            <option>نينوى</option>
-                            <option>أربيل</option>
-                            <option>السليمانية</option>
-                            <option>كركوك</option>
-                            <option>النجف</option>
-                            <option>كربلاء</option>
-                            <option>الأنبار</option>
-                            <option>صلاح الدين</option>
-                        </select>
-                    </div>
-                    <div class="input-group">
-                        <label>ابحث عن وظيفة أو شركة</label>
-                        <input type="text" id="searchKey" placeholder="ابحث هنا..." oninput="renderJobs()">
-                    </div>
-                </div>
+        <div class="dark-panel">
+            <div class="panel-header-title">
+                <span class="panel-header-icon">🧳</span>
+                <span>تصفح الوظائف</span>
             </div>
-
-            <h3 style="font-size: 16px; font-weight: 700; margin-bottom: 15px; color: #b0c4de;">جميع الوظائف المتاحة</h3>
-            <div id="jobs-list-container"></div>
-        </div>
-
-        <div id="post-section" class="section">
-            <div class="panel-card form-section">
-                <div class="panel-title">➕ نشر وظيفة جديدة</div>
-                <div style="margin-top: 15px;">
-                    <input id="jobTitleFull" placeholder="عنوان الوظيفة">
-                    <input id="jobCompanyFull" placeholder="اسم الشركة">
-                    <input id="jobSalaryFull" placeholder="الراتب المتوقع (مثال: 1,000,000 د.ع)">
-                    <select id="jobProvinceFull">
-                        <option value="">اختر المحافظة</option>
-                        <option>بغداد</option><option>البصرة</option><option>نينوى</option><option>أربيل</option>
+            <div class="panel-subtitle">ابحث عن الفرصة المناسبة لك</div>
+            
+            <div class="search-box-wrapper">
+                <div class="filter-group">
+                    <label>اختر المحافظة</label>
+                    <select id="province-filter" onchange="loadJobsList()">
+                        <option value="all">كل المحافظات</option>
+                        <option>بغداد</option>
+                        <option>البصرة</option>
+                        <option>نينوى</option>
+                        <option>أربيل</option>
+                        <option>السليمانية</option>
+                        <option>كركوك</option>
+                        <option>النجف</option>
+                        <option>كربلاء</option>
+                        <option>الأنبار</option>
+                        <option>ديالى</option>
+                        <option>ذي قار</option>
+                        <option>المثنى</option>
+                        <option>واسط</option>
+                        <option>بابل</option>
+                        <option>صلاح الدين</option>
+                        <option>ميسان</option>
+                        <option>القادسية</option>
                     </select>
-                    <textarea id="jobDescFull" placeholder="وصف الوظيفة والمتطلبات الأساسية" rows="6"></textarea>
-                    <button class="btn-submit-job" onclick="addJobFromForm('full')">نشر الوظيفة الحالية</button>
+                </div>
+                
+                <div class="search-input-container">
+                    <label>ابحث عن وظيفة أو شركة</label>
+                    <input type="text" id="search-keyword" placeholder="ابحث هنا..." oninput="loadJobsList()">
+                    <span class="search-icon">🔍</span>
                 </div>
             </div>
         </div>
 
-        <div id="profile-section" class="section">
-            <div class="panel-card form-section">
-                <div class="panel-title">👤 ملفي الشخصي الاحترافي</div>
-                <div style="margin-top: 15px; text-align: center;" id="profile-details-view">
-                    </div>
-            </div>
-        </div>
-
-    </div>
-
-    <div class="sidebar-area">
+        <div class="section-divider-title">جميع الوظائف المتاحة</div>
         
-        <div class="user-sidebar-card" id="user-sidebar-info">
+        <div id="jobs-cards-display"></div>
+
+    </div>
+
+    <div class="sidebar">
+        
+        <div class="user-profile-card" id="user-sidebar-box">
             </div>
 
-        <div class="side-form-card">
-            <h3>➕ انشر وظيفة جديدة</h3>
-            <input id="jobTitleSide" placeholder="عنوان الوظيفة">
-            <input id="jobCompanySide" placeholder="اسم الشركة">
-            <textarea id="jobDescSide" placeholder="وصف الوظيفة" rows="3"></textarea>
-            <select id="jobProvinceSide">
-                <option value="">اختر المحافظة</option>
-                <option>بغداد</option>
-                <option>البصرة</option>
-                <option>نينوى</option>
-                <option>أربيل</option>
-            </select>
-            <button class="btn-submit-job" onclick="addJobFromForm('side')">نشر الوظيفة</button>
+        <div class="post-job-sidebar-card" id="post-target">
+            <div class="sidebar-card-title">
+                <span style="color:#00ffd5; font-size:18px;">➕</span>
+                <span>انشر وظيفة جديدة</span>
+            </div>
+            <div class="sidebar-form">
+                <input type="text" id="form-job-title" placeholder="عنوان الوظيفة" required>
+                <input type="text" id="form-job-company" placeholder="اسم الشركة" required>
+                <textarea id="form-job-desc" placeholder="وصف الوظيفة" rows="4" required></textarea>
+                
+                <div style="display: flex; flex-direction: column; gap: 6px;">
+                    <select id="form-job-province" required>
+                        <option value="">اختر المحافظة</option>
+                        <option>بغداد</option><option>البصرة</option><option>نينوى</option>
+                        <option>أربيل</option><option>السليمانية</option><option>كركوك</option>
+                        <option>النجف</option><option>كربلاء</option><option>الأنبار</option>
+                    </select>
+                </div>
+                
+                <input type="text" id="form-job-salary" placeholder="الراتب (مثال: 1,200,000 د.ع)">
+                <button class="btn-post-submit" onclick="submitNewJob()">نشر الوظيفة</button>
+            </div>
         </div>
 
-        <div class="info-sidebar-box">
-            <div class="info-box-header">ℹ️ معلومات</div>
-            <p style="color: #8fa0a6; font-size: 13px; line-height: 1.6;">يمكنك نشر وظيفة جديدة لتصل إلى آلاف الباحثين عن عمل في جميع أنحاء العراق.</p>
+        <div class="info-sidebar-card">
+            <div class="info-card-header">
+                <span>ℹ️</span>
+                <span>معلومات</span>
+            </div>
+            <p style="color: #728a95; font-size: 13px; line-height: 1.6;">يمكنك نشر وظيفة جديدة لتصل إلى آلاف الباحثين عن عمل في جميع أنحاء العراق.</p>
         </div>
 
     </div>
 
-    <div class="table-panel">
-        <div class="panel-title">📂 وظائفي المنشورة</div>
-        <p style="color: #8fa0a6; font-size: 12px;">يمكنك إدارة وحذف الوظائف التي قمت بنشرها</p>
-        <table class="manage-table">
+    <div class="table-panel-card">
+        <div class="panel-header-title">
+            <span class="panel-header-icon">🗃️</span>
+            <span>وظائفي المنشورة</span>
+        </div>
+        <p style="color: #728a95; font-size: 12px; margin-top: 4px;">يمكنك إدارة وحذف الوظائف التي قمت بنشرها على المنصة</p>
+        
+        <table class="jobs-table">
             <thead>
                 <tr>
                     <th>العنوان</th>
@@ -549,154 +637,122 @@ footer {
                     <th>الإجراءات</th>
                 </tr>
             </thead>
-            <tbody id="my-posted-jobs-table">
+            <tbody id="my-jobs-table-body">
                 </tbody>
         </table>
     </div>
+
 </div>
 
-<div id="modal-login" class="modal-overlay">
-    <div class="modal-window">
-        <h3 style="margin-bottom: 20px; color:#00eaff;">تسجيل الدخول</h3>
-        <input type="email" id="logEmail" placeholder="البريد الإلكتروني" style="width:100%; padding:10px; margin-bottom:12px; background:#112933; border:1px solid rgba(255,255,255,0.1); color:white; border-radius:6px;">
-        <input type="password" id="logPass" placeholder="كلمة المرور" style="width:100%; padding:10px; margin-bottom:20px; background:#112933; border:1px solid rgba(255,255,255,0.1); color:white; border-radius:6px;">
-        <button class="btn-submit-job" onclick="loginAction()">دخول</button>
-        <button class="btn-submit-job" onclick="closeAuthModals()" style="background:transparent; color:#8fa0a6; margin-top:10px;">إلغاء</button>
+<div class="popup-overlay" id="login-popup">
+    <div class="popup-box">
+        <h3>تسجيل الدخول للمنصة</h3>
+        <input type="email" id="log-email" placeholder="البريد الإلكتروني">
+        <input type="password" id="log-pass" placeholder="كلمة المرور">
+        <button class="btn-post-submit" onclick="loginProcess()">دخول</button>
+        <button class="btn-post-submit" style="background:transparent; color:#728a95; margin-top:10px;" onclick="closePopups()">إلغاء</button>
     </div>
 </div>
 
-<div id="modal-register" class="modal-overlay">
-    <div class="modal-window">
-        <h3 style="margin-bottom: 20px; color:#00eaff;">إنشاء حساب جديد</h3>
-        <input type="text" id="regName" placeholder="الاسم الكامل" style="width:100%; padding:10px; margin-bottom:12px; background:#112933; border:1px solid rgba(255,255,255,0.1); color:white; border-radius:6px;">
-        <input type="email" id="regEmail" placeholder="البريد الإلكتروني" style="width:100%; padding:10px; margin-bottom:12px; background:#112933; border:1px solid rgba(255,255,255,0.1); color:white; border-radius:6px;">
-        <input type="password" id="regPass" placeholder="كلمة المرور" style="width:100%; padding:10px; margin-bottom:20px; background:#112933; border:1px solid rgba(255,255,255,0.1); color:white; border-radius:6px;">
-        <button class="btn-submit-job" onclick="registerAction()">تسجيل</button>
-        <button class="btn-submit-job" onclick="closeAuthModals()" style="background:transparent; color:#8fa0a6; margin-top:10px;">إلغاء</button>
+<div class="popup-overlay" id="register-popup">
+    <div class="popup-box">
+        <h3>إنشاء حساب جديد</h3>
+        <input type="text" id="reg-name" placeholder="الاسم الكامل">
+        <input type="email" id="reg-email" placeholder="البريد الإلكتروني">
+        <input type="password" id="reg-pass" placeholder="كلمة المرور">
+        <button class="btn-post-submit" onclick="registerProcess()">تأكيد الحساب</button>
+        <button class="btn-post-submit" style="background:transparent; color:#728a95; margin-top:10px;" onclick="closePopups()">إلغاء</button>
+    </div>
+</div>
+
+<div class="popup-overlay" id="profile-popup">
+    <div class="popup-box">
+        <h3>👤 إدارة ملفي الشخصي الاحترافي</h3>
+        <div style="text-align: center; margin-bottom: 15px;">
+            <div class="avatar-wrapper" style="width: 90px; height: 90px;" onclick="triggerPhotoUpload()">
+                <img id="popup-avatar-preview" src="" alt="Avatar">
+            </div>
+            <input type="file" id="photo-file-input" accept="image/*" style="display: none;" onchange="processPhotoUpload()">
+            <p style="font-size: 12px; color: #00ffd5; cursor: pointer;" onclick="triggerPhotoUpload()">تحديث الصورة الشخصية</p>
+        </div>
+        
+        <div style="margin-bottom: 15px;">
+            <label style="font-size:12px; color:#728a95;">رفع أو تحديث السيرة الذاتية (CV):</label>
+            <input type="file" id="cv-file-input" accept=".pdf,.doc,.docx" onchange="processCvUpload()" style="margin-top:5px; padding:5px;">
+            <p style="font-size:12px; color:#a2b7c0;" id="popup-cv-status-text"></p>
+        </div>
+        
+        <button class="btn-post-submit" onclick="closePopups()">حفظ وإغلاق</button>
     </div>
 </div>
 
 <footer>
-    © <span id="year-copy">2026</span> شغلني - جميع الحقوق محفوظة
+    © <span id="current-year">2026</span> شغلني - جميع الحقوق محفوظة
 </footer>
 
 <script>
-// البيانات الافتراضية الأولية المطابقة للصورة
-const initialJobs = [
-    { id: 101, title: "مطور ويب متكامل", company: "شركة التقنية العالمية", desc: "مطلوب مطور ويب لديه خبرة في تطوير المواقع والتطبيقات باستخدام HTML, CSS, JavaScript, PHP", province: "بغداد", salary: "1,200,000 د.ع", date: "2026-05-31", owner: "أحمد محمد" },
-    { id: 102, title: "مصمم جرافيك", company: "مؤسسة الإبداع", desc: "مطلوب مصمم جرافيك مبدع للعمل على تصميم الهوية البصرية والمواد الإعلانية", province: "أربيل", salary: "800,000 د.ع", date: "2026-05-31", owner: "أحمد محمد" },
-    { id: 103, title: "محاسب مالي", company: "شركة النور للتجارة", desc: "مطلوب محاسب مالي ذو خبرة في إعداد التقارير المالية ومتابعة الحسابات", province: "البصرة", salary: "900,000 د.ع", date: "2026-05-31", owner: "علي حسن" }
+// البيانات الافتراضية المأخوذة من صورتك لتظهر مباشرة عند التحميل
+const fallbackJobs = [
+    { id: 2001, title: "مطور ويب متكامل", company: "شركة التقنية العالمية", desc: "مطلوب مطور ويب لديه خبرة في تطوير المواقع والتطبيقات باستخدام HTML, CSS, JavaScript, PHP", province: "بغداد", salary: "1,200,000 د.ع", date: "2026-05-31", author: "أحمد محمد" },
+    { id: 2002, title: "مصمم جرافيك", company: "مؤسسة الإبداع", desc: "مطلوب مصمم جرافيك مبدع للعمل على تصميم الهوية البصرية والمواد الإعلانية", province: "أربيل", salary: "800,000 د.ع", date: "2026-05-31", author: "أحمد محمد" },
+    { id: 2003, title: "محاسب مالي", company: "شركة النور للتجارة", desc: "مطلوب محاسب مالي ذو خبرة في إعداد التقارير المالية ومتابعة الحسابات", province: "البصرة", salary: "900,000 د.ع", date: "2026-05-31", author: "أحمد محمد" }
 ];
 
-// تهيئة البيانات المحلية من LocalStorage
-if(!localStorage.getItem("jobs_platform")) {
-    localStorage.setItem("jobs_platform", JSON.stringify(initialJobs));
-}
+const defaultAvatarIcon = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2300ffd5'><path d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5-4-8-4z'/></svg>";
 
-// المستخدمين الافتراضيين لتسهيل الفحص والتطابق الفوري
-if(!localStorage.getItem("users_platform")) {
-    localStorage.setItem("users_platform", JSON.stringify([
-        {name: "أحمد محمد", email: "ahmed@test.com", pass: "123456", title:"مطور برمجيات", bio:"خبرة 5 سنوات"}
+// تهيئة التخزين
+if(!localStorage.getItem("db_users")) {
+    localStorage.setItem("db_users", JSON.stringify([
+        { name: "أحمد محمد", email: "ahmed@job.com", pass: "123456", photo: "", cvName: "سيرتي الذاتية الاحترافية.pdf" }
     ]));
 }
-
-// تعيين الجلسة الافتراضية للمطابقة المباشرة مع الصورة (أحمد محمد)
-if(!sessionStorage.getItem("user_session")) {
-    sessionStorage.setItem("user_session", JSON.stringify({name: "أحمد محمد", email: "ahmed@test.com", title:"مطور برمجيات"}));
+if(!localStorage.getItem("db_jobs")) {
+    localStorage.setItem("db_jobs", JSON.stringify(fallbackJobs));
+}
+// تهيئة الجلسة التلقائية لأحمد محمد ليطابق الصورة فوراً عند الفتح
+if(!sessionStorage.getItem("active_session")) {
+    sessionStorage.setItem("active_session", JSON.stringify({ name: "أحمد محمد", email: "ahmed@job.com" }));
 }
 
-document.getElementById("year-copy").innerText = new Date().getFullYear();
-
-// التحميل والتشغيل الأساسي
+// دالة التشغيل الأساسية عند تحميل الصفحة
 window.onload = function() {
-    renderUserInterface();
-    renderJobs();
+    document.getElementById("current-year").innerText = new Date().getFullYear();
+    syncUserInterface();
+    loadJobsList();
 };
 
-function switchTab(tabId) {
-    document.querySelectorAll(".section").forEach(s => s.classList.remove("active"));
-    document.querySelectorAll(".nav-menu a").forEach(a => a.classList.remove("active-link"));
-    document.querySelectorAll(".sidebar-menu-item").forEach(m => m.classList.remove("active-menu"));
-    
-    document.getElementById(tabId + "-section").classList.add("active");
-    
-    // تفعيل الرابط النشط
-    if(tabId === 'browse') {
-        document.getElementById("menu-browse-item")?.classList.add("active-menu");
-    } else if(tabId === 'post') {
-        document.getElementById("menu-post-item")?.classList.add("active-menu");
-    } else if(tabId === 'profile') {
-        document.getElementById("menu-profile-item")?.classList.add("active-menu");
+function scrollToSection(id) {
+    document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+}
+
+function openPopup(id) {
+    document.getElementById(id).style.display = 'flex';
+}
+
+function closePopups() {
+    document.getElementById("login-popup").style.display = 'none';
+    document.getElementById("register-popup").style.display = 'none';
+    document.getElementById("profile-popup").style.display = 'none';
+}
+
+function openProfileModal() {
+    let session = sessionStorage.getItem("active_session");
+    if(!session) {
+        alert("يرجى تسجيل الدخول أولاً للوصول لملفك الشخصي!");
+        openPopup("login-popup");
+        return;
+    }
+    let userSession = JSON.parse(session);
+    let users = JSON.parse(localStorage.getItem("db_users") || "[]");
+    let fullData = users.find(u => u.email === userSession.email);
+
+    if(fullData) {
+        document.getElementById("popup-avatar-preview").src = fullData.photo || defaultAvatarIcon;
+        document.getElementById("popup-cv-status-text").innerText = fullData.cvName ? "الملف الحالي: " + fullData.cvName : "لم ترفع سيرة ذاتية بعد.";
+        openPopup("profile-popup");
     }
 }
 
-function openAuthModal(type) {
-    closeAuthModals();
-    document.getElementById("modal-" + type).style.display = "flex";
-}
-
-function closeAuthModals() {
-    document.getElementById("modal-login").style.display = "none";
-    document.getElementById("modal-register").style.display = "none";
-}
-
-// تسجيل مستخدم جديد
-function registerAction() {
-    let users = JSON.parse(localStorage.getItem("users_platform") || "[]");
-    let name = document.getElementById("regName").value.trim();
-    let email = document.getElementById("regEmail").value.trim();
-    let pass = document.getElementById("regPass").value;
-
-    if(!name || !email || !pass) { alert("يرجى ملء جميع الحقول"); return; }
-
-    let user = { name, email, pass, title: "باحث عن عمل", bio: "" };
-    users.push(user);
-    localStorage.setItem("users_platform", JSON.stringify(users));
-    sessionStorage.setItem("user_session", JSON.stringify(user));
-    closeAuthModals();
-    renderUserInterface();
-    renderJobs();
-    alert("تم إنشاء الحساب وتسجيل الدخول بنجاح");
-}
-
-// تسجيل دخول
-function loginAction() {
-    let users = JSON.parse(localStorage.getItem("users_platform") || "[]");
-    let email = document.getElementById("logEmail").value.trim();
-    let pass = document.getElementById("logPass").value;
-
-    let user = users.find(u => u.email === email && u.pass === pass);
-    if(user) {
-        sessionStorage.setItem("user_session", JSON.stringify(user));
-        closeAuthModals();
-        renderUserInterface();
-        renderJobs();
-    } else {
-        alert("البريد الإلكتروني أو كلمة المرور خاطئة");
-    }
-}
-
-function logoutAction() {
-    sessionStorage.removeItem("user_session");
-    renderUserInterface();
-    renderJobs();
-}
-
-// تحديث واجهات المستخدم والملف الشخصي والجانبي
-function renderUserInterface() {
-    let session = sessionStorage.getItem("user_session");
-    let authContainer = document.getElementById("auth-buttons-container");
-    let sidebarContainer = document.getElementById("user-sidebar-info");
-    let profileView = document.getElementById("profile-details-view");
-
-    if(session) {
-        let user = JSON.parse(session);
-        
-        // أزرار الهيدر
-        authContainer.innerHTML = `
-            <button onclick="switchTab('post')">لوحة التحكم</button>
-            <button class="btn-fill" onclick="logoutAction()">تسجيل خروج</button>
-        `;
-
-        // قائمة الجانب الأيمن كاملة
-        sidebarContainer.inne
+// إدارة واجهات الحساب والملف الجانبي والعلوي
+function syncUserInterface() {
+    let session = sessionStorage.getItem("active_ses
