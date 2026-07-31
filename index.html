@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>شغلني | منصة التوظيف المتكاملة</title>
+<title>شغلني | منصة التوظيف المتقدمة</title>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
 
 <style>
@@ -111,7 +111,7 @@ nav .nav-links a:hover {
 
 /* Jobs Section */
 .jobs {
-    padding: 50px;
+    padding: 60px 20px;
     max-width: 1000px;
     margin: auto;
 }
@@ -119,6 +119,17 @@ nav .nav-links a:hover {
 .jobs h2 {
     text-align: center;
     margin-bottom: 30px;
+    position: relative;
+}
+
+.jobs h2::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 4px;
+    background: #00ffd5;
+    margin: 10px auto 0 auto;
+    border-radius: 2px;
 }
 
 .job-card {
@@ -128,7 +139,6 @@ nav .nav-links a:hover {
     border-radius: 15px;
     transition: 0.3s;
     border: 1px solid rgba(255,255,255,0.1);
-    position: relative;
 }
 
 .job-card:hover {
@@ -170,6 +180,17 @@ nav .nav-links a:hover {
     border-top: 1px solid rgba(255,255,255,0.1);
 }
 
+.job-btn {
+    margin-top: 10px;
+    display: inline-block;
+    padding: 8px 15px;
+    background: #00ffd5;
+    color: black;
+    border-radius: 20px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
 /* Rating System */
 .rating-container {
     display: flex;
@@ -203,15 +224,26 @@ nav .nav-links a:hover {
     margin-right: 5px;
 }
 
-/* Form Section */
+/* Form Section (فصل تماماً عن الوظائف) */
 .form-section {
-    padding: 50px 20px;
+    padding: 60px 20px;
     background: rgba(0, 0, 0, 0.2);
 }
 
 .form-section h2 {
     text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
+    position: relative;
+}
+
+.form-section h2::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 4px;
+    background: #00ffd5;
+    margin: 10px auto 0 auto;
+    border-radius: 2px;
 }
 
 form {
@@ -257,9 +289,11 @@ input:focus, textarea:focus {
     padding: 30px;
     border-radius: 15px;
     width: 90%;
-    max-width: 400px;
+    max-width: 500px;
     position: relative;
     border: 1px solid #00ffd5;
+    max-height: 90vh;
+    overflow-y: auto;
 }
 
 .close-btn {
@@ -275,15 +309,58 @@ input:focus, textarea:focus {
     color: white;
 }
 
-/* Profile Widget */
-.profile-card {
+/* Profile Section In Modal */
+.profile-avatar-container {
+    text-align: center;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.profile-avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #00ffd5;
+    background: #203a43;
+}
+
+.file-input-label {
+    display: block;
+    font-size: 13px;
+    color: #00ffd5;
+    margin-top: 5px;
+    cursor: pointer;
+}
+
+.cv-status {
+    background: rgba(255,255,255,0.1);
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    font-size: 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Header Profile Widget */
+.profile-widget {
     background: rgba(0, 255, 213, 0.1);
-    padding: 10px 15px;
-    border-radius: 10px;
+    padding: 5px 15px;
+    border-radius: 20px;
     display: flex;
     align-items: center;
     gap: 10px;
     border: 1px solid rgba(0, 255, 213, 0.3);
+    cursor: pointer;
+}
+
+.profile-widget img {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    object-fit: cover;
 }
 
 .user-name {
@@ -305,7 +382,7 @@ footer {
     <div class="logo">شغلني</div>
     <div class="nav-links">
         <a href="#">الرئيسية</a>
-        <a href="#jobs-section">الوظائف</a>
+        <a href="#jobs-section">الوظائف المتاحة</a>
         <a href="#post-section">انشر وظيفة</a>
     </div>
     <div class="auth-buttons" id="auth-container">
@@ -318,7 +395,7 @@ footer {
     <h1>ابدأ رحلتك المهنية الآن</h1>
     <p>منصة شغلني تربط بين أصحاب العمل والباحثين عن الوظائف بسهولة واحترافية</p>
     <a href="#jobs-section" class="btn btn-primary" style="text-decoration:none; display:inline-block;">تصفح الوظائف</a>
-    <a href="#post-section" class="btn btn-secondary" style="text-decoration:none; display:inline-block;">انشر وظيفة</a>
+    <a href="#post-section" class="btn btn-secondary" style="text-decoration:none; display:inline-block;">انشر وظيفة الآن</a>
 </section>
 
 <section class="jobs" id="jobs-section">
@@ -328,11 +405,11 @@ footer {
 </section>
 
 <section class="form-section" id="post-section">
-    <h2>انشر وظيفة جديدة فعلياً</h2>
+    <h2>انشر وظيفة جديدة</h2>
     <form id="job-form" onsubmit="handlePostJob(event)">
-        <input type="text" id="job-title-input" placeholder="اسم الوظيفة (مثال: مطور فرونت اند)" required>
-        <input type="text" id="job-company-input" placeholder="اسم الشركة أو الجهة المعلنة" required>
-        <textarea id="job-desc-input" placeholder="وصف الوظيفة، المتطلبات، والشروط..." rows="5" required></textarea>
+        <input type="text" id="job-title-input" placeholder="اسم الوظيفة (مثال: مطور ويب فرونت اند)" required>
+        <input type="text" id="job-company-input" placeholder="اسم الشركة أو المؤسسة" required>
+        <textarea id="job-desc-input" placeholder="اكتب تفاصيل الوظيفة والشروط والمميزات هنا..." rows="5" required></textarea>
         <button type="submit" class="btn btn-primary" style="width: 100%;">نشر الوظيفة فوراً</button>
     </form>
 </section>
@@ -356,8 +433,43 @@ footer {
         <form onsubmit="handleRegister(event)">
             <input type="text" id="reg-name" placeholder="الاسم الكامل" required>
             <input type="email" id="reg-email" placeholder="البريد الإلكتروني" required>
-            <input type="password" id="reg-pass" placeholder="كلمة المرور من 6 خانات على الأقل" minlength="6" required>
+            <input type="password" id="reg-pass" placeholder="كلمة المرور" minlength="6" required>
             <button type="submit" class="btn btn-primary" style="width:100%;">إنشاء الحساب</button>
+        </form>
+    </div>
+</div>
+
+<div id="profile-modal" class="modal">
+    <div class="modal-content">
+        <span class="close-btn" onclick="closeModal('profile-modal')">&times;</span>
+        <h3 style="margin-bottom:20px; text-align:center;">ملفي الشخصي الاحترافي</h3>
+        
+        <div class="profile-avatar-container">
+            <img src="" id="profile-img-preview" class="profile-avatar" alt="الصورة الشخصية">
+            <label class="file-input-label">
+                تغيير الصورة الشخصية
+                <input type="file" id="profile-img-input" accept="image/*" style="display:none;" onchange="uploadPhoto()">
+            </label>
+        </div>
+
+        <form onsubmit="handleSaveProfile(event)">
+            <label style="font-size: 14px; color:#aaa;">الاسم بالكامل:</label>
+            <input type="text" id="profile-name" required>
+            
+            <label style="font-size: 14px; color:#aaa;">المسمى الوظيفي الحالي:</label>
+            <input type="text" id="profile-title" placeholder="مثال: مطور ويب / مصمم واجهات">
+
+            <label style="font-size: 14px; color:#aaa;">السيرة الذاتية (CV):</label>
+            <div class="cv-status">
+                <span id="cv-file-name" style="color: #ccc;">لم يتم رفع سيرة ذاتية بعد</span>
+                <label class="btn btn-secondary" style="padding: 5px 10px; font-size:12px; margin:0;">
+                    رفع الملف
+                    <input type="file" id="profile-cv-input" accept=".pdf,.doc,.docx" style="display:none;" onchange="uploadCV()">
+                </label>
+            </div>
+
+            <button type="submit" class="btn btn-primary" style="width:100%; margin-bottom:10px;">حفظ التغييرات</button>
+            <button type="button" class="btn btn-secondary" onclick="handleLogout()" style="width:100%; border-color:#ff4d4d; color:#ff4d4d;">تسجيل الخروج</button>
         </form>
     </div>
 </div>
@@ -367,13 +479,14 @@ footer {
 </footer>
 
 <script>
-// --- البيانات الافتراضية الأولية في حال كانت الذاكرة فارغة ---
+// --- البيانات الأولية والافتراضية ---
 const defaultJobs = [
     { id: 1, title: "مصمم مواقع محترف", company: "شركة ابتكار التقنية", desc: "نبحث عن مصمم UI/UX متمكن من أدوات Figma و Adobe XD لبناء واجهات عصرية لمشاريعنا الحالية.", ratings: [5, 4, 5] },
-    { id: 2, title: "مطور ويب متكامل (Full-Stack)", company: "مؤسسة الحلول البرمجية", desc: "مطلوب مطور لديه خبرة جيدة في التعامل مع HTML, CSS, JavaScript بالإضافة إلى Node.js أو PHP لإدارة الخلفيات البرمجية.", ratings: [4, 4] }
+    { id: 2, title: "مطور ويب متكامل (Full-Stack)", company: "مؤسسة الحلول البرمجية", desc: "مطلوب مطور لديه خبرة جيدة في التعامل مع HTML, CSS, JavaScript بالإضافة إلى التعامل مع قواعد البيانات.", ratings: [4, 4] }
 ];
 
-// جلب البيانات من الـ LocalStorage أو تعيين الافتراضية
+const defaultAvatar = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23aaa'><path d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5-4-8-4z'/></svg>";
+
 let users = JSON.parse(localStorage.getItem('users')) || [];
 let jobs = JSON.parse(localStorage.getItem('jobs')) || defaultJobs;
 let currentUser = JSON.parse(localStorage.getItem('currentUser')) || null;
@@ -382,21 +495,27 @@ if(!localStorage.getItem('jobs')){
     localStorage.setItem('jobs', JSON.stringify(defaultJobs));
 }
 
-// عند تحميل الصفحة بالكامل
 window.onload = function() {
     updateAuthUI();
     renderJobs();
 };
 
-// --- إدارة النوافذ المنبثقة (Modals) ---
+// --- إدارة النوافذ (Modals) ---
 function openModal(id) {
+    if (id === 'profile-modal' && currentUser) {
+        // تعبئة بيانات الملف الشخصي الحالية عند الفتح
+        document.getElementById('profile-name').value = currentUser.name || '';
+        document.getElementById('profile-title').value = currentUser.title || '';
+        document.getElementById('profile-img-preview').src = currentUser.photo || defaultAvatar;
+        document.getElementById('cv-file-name').innerText = currentUser.cvName || 'لم يتم رفع سيرة ذاتية بعد';
+    }
     document.getElementById(id).style.display = 'flex';
 }
 function closeModal(id) {
     document.getElementById(id).style.display = 'none';
 }
 
-// --- نظام الحسابات (تسجيل، دخول، خروج) ---
+// --- إدارة الحسابات والملف الشخصي الكامل ---
 function handleRegister(e) {
     e.preventDefault();
     const name = document.getElementById('reg-name').value.trim();
@@ -408,17 +527,17 @@ function handleRegister(e) {
         return;
     }
 
-    const newUser = { id: Date.now(), name, email, pass };
+    const newUser = { id: Date.now(), name, email, pass, title: '', photo: defaultAvatar, cvName: '', cvData: '' };
     users.push(newUser);
     localStorage.setItem('users', JSON.stringify(users));
 
     currentUser = newUser;
     localStorage.setItem('currentUser', JSON.stringify(currentUser));
     
-    alert(`أهلاً بك يا ${name}! تم إنشاء حسابك بنجاح.`);
+    alert(`تم إنشاء الحساب بنجاح! أهلاً بك يا ${name}`);
     closeModal('register-modal');
     updateAuthUI();
-    renderJobs(); // لإعادة التحديث وإظهار أزرار الحذف بناء على هويتك الجديدة
+    renderJobs();
 }
 
 function handleLogin(e) {
@@ -429,7 +548,7 @@ function handleLogin(e) {
     const user = users.find(u => u.email === email && u.pass === pass);
 
     if(!user) {
-        alert("البريد الإلكتروني أو كلمة المرور غير صحيحة!");
+        alert("بيانات الدخول غير صحيحة!");
         return;
     }
 
@@ -445,20 +564,66 @@ function handleLogin(e) {
 function handleLogout() {
     currentUser = null;
     localStorage.removeItem('currentUser');
-    alert("تم تسجيل الخروج بنجاح.");
+    alert("تم تسجيل الخروج.");
+    closeModal('profile-modal');
     updateAuthUI();
     renderJobs();
 }
 
-// تحديث الهيدر بناء على حالة الحساب (ملف شخصي مصغر)
+// دالة رفع وحفظ الصورة الشخصية كـ Base64
+function uploadPhoto() {
+    const file = document.getElementById('profile-img-input').files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onloadend = function() {
+            document.getElementById('profile-img-preview').src = reader.result;
+            currentUser.photo = reader.result; // تخزين مؤقت حتى يتم الضغط على حفظ
+        }
+        reader.readAsDataURL(file);
+    }
+}
+
+// دالة رفع السيرة الذاتية وحفظ اسم الملف وبياناته
+function uploadCV() {
+    const file = document.getElementById('profile-cv-input').files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onloadend = function() {
+            document.getElementById('cv-file-name').innerText = file.name;
+            currentUser.cvName = file.name;
+            currentUser.cvData = reader.result; // حفظ محتوى الملف (Base64)
+        }
+        reader.readAsDataURL(file);
+    }
+}
+
+// حفظ بيانات الملف الشخصي المعدلة
+function handleSaveProfile(e) {
+    e.preventDefault();
+    currentUser.name = document.getElementById('profile-name').value.trim();
+    currentUser.title = document.getElementById('profile-title').value.trim();
+
+    // تحديث قاعدة بيانات المستخدمين الكلية
+    users = users.map(u => u.id === currentUser.id ? currentUser : u);
+    
+    localStorage.setItem('currentUser', JSON.stringify(currentUser));
+    localStorage.setItem('users', JSON.stringify(users));
+
+    alert("تم تحديث وحفظ بيانات ملفك الشخصي بنجاح!");
+    closeModal('profile-modal');
+    updateAuthUI();
+}
+
+// تحديث الهيدر والملف الشخصي المصغر
 function updateAuthUI() {
     const container = document.getElementById('auth-container');
     if (currentUser) {
+        const userPhoto = currentUser.photo || defaultAvatar;
         container.innerHTML = `
-            <div class="profile-card">
-                <span>مرحباً، <span class="user-name">${currentUser.name}</span></span>
+            <div class="profile-widget" onclick="openModal('profile-modal')">
+                <img src="${userPhoto}" alt="Avatar">
+                <span class="user-name">${escapeHTML(currentUser.name)}</span>
             </div>
-            <button class="btn btn-secondary" onclick="handleLogout()" style="padding: 5px 15px; font-size:14px;">خروج</button>
         `;
     } else {
         container.innerHTML = `
@@ -468,18 +633,17 @@ function updateAuthUI() {
     }
 }
 
-// --- نظام إدارة ونشر الوظائف ديناميكياً ---
+// --- عرض ونشر الوظائف ديناميكياً ---
 function renderJobs() {
     const container = document.getElementById('jobs-container');
     container.innerHTML = '';
 
     if(jobs.length === 0) {
-        container.innerHTML = `<p style="text-align:center; color:#aaa; padding:20px;">لا توجد وظائف معروضة حالياً. كن أول من ينشر وظيفة!</p>`;
+        container.innerHTML = `<p style="text-align:center; color:#aaa; padding:20px;">لا توجد وظائف معروضة حالياً.</p>`;
         return;
     }
 
     jobs.forEach(job => {
-        // حساب متوسط التقييم الحالي للوظيفة
         const avgRating = job.ratings && job.ratings.length > 0 
             ? (job.ratings.reduce((a, b) => a + b, 0) / job.ratings.length).toFixed(1) 
             : 0;
@@ -488,9 +652,8 @@ function renderJobs() {
         card.className = 'job-card';
         
         let deleteBtn = '';
-        // السماح بحذف الوظيفة إذا كان المستخدم هو من نشرها (أو لو كانت افتراضية والكل يستطيع تجربتها)
         if(currentUser && (job.postedBy === currentUser.id || !job.postedBy)) {
-            deleteBtn = `<button class="btn btn-danger" onclick="deleteJob(${job.id})">حذف</button>`;
+            deleteBtn = `<button class="btn btn-danger" onclick="deleteJob(${job.id})">حذف الوظيفة</button>`;
         }
 
         card.innerHTML = `
@@ -504,7 +667,7 @@ function renderJobs() {
             <p class="job-desc">${escapeHTML(job.desc)}</p>
             
             <div class="job-footer">
-                <a href="mailto:careers@shoghlny.com?subject=التقديم على وظيفة: ${encodeURIComponent(job.title)}" class="job-btn">تقديم سريع</a>
+                <a href="#" class="job-btn" onclick="applyJob('${escapeHTML(job.title)}')">تقديم سيرة ذاتية</a>
                 
                 <div class="rating-container">
                     <span class="rating-count">(${job.ratings ? job.ratings.length : 0} تقييم - متوسط: ${avgRating})</span>
@@ -526,7 +689,7 @@ function handlePostJob(e) {
     e.preventDefault();
 
     if(!currentUser) {
-        alert("عذراً، يجب عليك تسجيل الدخول أو إنشاء حساب أولاً لكي تتمكن من نشر وظيفة!");
+        alert("يجب عليك تسجيل الدخول أو إنشاء حساب أولاً لتتمكن من نشر الوظائف!");
         openModal('login-modal');
         return;
     }
@@ -541,53 +704,11 @@ function handlePostJob(e) {
         company,
         desc,
         ratings: [],
-        postedBy: currentUser.id // ربط الوظيفة بصاحب الحساب الحالي
+        postedBy: currentUser.id
     };
 
-    jobs.unshift(newJob); // إضافة الوظيفة في الأعلى
+    jobs.unshift(newJob);
     localStorage.setItem('jobs', JSON.stringify(jobs));
 
-    // ريست للفروم وإعادة البناء
     document.getElementById('job-form').reset();
-    renderJobs();
-    alert("تم نشر وظيفتك بنجاح وعرضها فوراً في القائمة!");
-    
-    // سكرول تلقائي لرؤية الوظيفة المضافة
-    document.getElementById('jobs-section').scrollIntoView({ behavior: 'smooth' });
-}
-
-function deleteJob(id) {
-    if(confirm("هل أنت متأكد من رغبتك في حذف هذه الوظيفة نهائياً؟")) {
-        jobs = jobs.filter(j => j.id !== id);
-        localStorage.setItem('jobs', JSON.stringify(jobs));
-        renderJobs();
-    }
-}
-
-// --- نظام التقييم التفاعلي ---
-function rateJob(jobId, ratingValue) {
-    if(!currentUser) {
-        alert("برجاء تسجيل الدخول أولاً لتتمكن من تقييم الوظائف!");
-        openModal('login-modal');
-        return;
-    }
-
-    const job = jobs.find(j => j.id === jobId);
-    if(job) {
-        if(!job.ratings) job.ratings = [];
-        job.ratings.push(ratingValue);
-        localStorage.setItem('jobs', JSON.stringify(jobs));
-        renderJobs();
-    }
-}
-
-// دالة حماية لمنع حقن أكواد خبيثة (XSS Security)
-function escapeHTML(str) {
-    return str.replace(/[&<>'"]/g, 
-        tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag)
-    );
-}
-</script>
-
-</body>
-    </html>
+    r
